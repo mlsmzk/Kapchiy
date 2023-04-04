@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>People App</title>
+    <!-- load local stylesheet (css) -->
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- loading jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <% list.forEach( (elt) => {%>
+    <h1 class="person"><%= elt.name %></h1>
+    <p><%= elt.name %> was added by 
+       <%= elt.addedby ? 
+            (elt.addedby.name ? 
+                elt.addedby.name : "a secret person from Wellesley :o")
+                    : "a secret person from Wellesley :o" %>
+        and they were born on <%= elt.birthdate ? elt.birthdate : "a secret year"%>.</p>
+    <h2 class="featured">Featured In:</h2>
+    <ul>
+        <% elt.movies.forEach( (movie) => {%>
+            <li><a href=/tt/<%= movie.tt %>><%= movie.title %>, <%= movie.release %></a></li>
+        <% }); %>
+        <% }); %>
+    </ul>
+    <!-- load local js -->
+    <script src="/main.js"></script>
+</body>
+</html>
