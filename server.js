@@ -19,7 +19,6 @@ const flash = require('express-flash');
 
 const { Connection } = require('./connection');
 const cs304 = require('./cs304');
-const createPost = require('./createPost');
 
 // Create and configure the app
 
@@ -53,6 +52,9 @@ const mongoUri = cs304.getMongoUri();
 // Use these constants and mispellings become errors
 const kdb = "kapchiydb";
 const POSTS = "movies";
+
+// Function for inserting posts: createPost.Post()
+const createPost = require('./createPost');
 
 // main page. just has links to two other pages
 app.get('/', (req, res) => {
