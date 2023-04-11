@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
 
 app.get('/posts/:postid', async (req, res) => {
     let id = req.query.postid;
-    const db = await Connection.open(mongoUri, kdb);
+    let db = await Connection.open(mongoUri, kdb);
     let posts = db.collection(POSTS);
     let postResult = await posts.find({postId : id})
     return res.render('post.ejs', {post: postResult});
