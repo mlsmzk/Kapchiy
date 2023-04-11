@@ -17,13 +17,14 @@
     <h2><%=userBio%></h2>
 
     <h2><%= userPosts %></h2>
-    <ul></ul>
+    <div id="userPosts">
+        <% images.forEach((image) => {%>
+            <a href ="#"><img src ="<%=image.url%>"></a>
+        <% }) %>
+    </div>
+    
 
-    <ol>
-        <% list.forEach( (elt) => {%>
-        <li><%= elt %></li>
-        <% }); %>
-    </ol>
+    
 
 
 
