@@ -61,6 +61,12 @@ app.get('/', (req, res) => {
     return res.render('index.ejs');
 });
 
+//userpage with specific id
+app.get('/userpage/:userId', (req,res)=> {
+    var userId = req.params.userId;
+    return res.render(`userpage/${userId}`);
+});
+
 app.get('/posts/:postid', async (req, res) => {
     let id = req.query.postid;
     let db = await Connection.open(mongoUri, kdb);
