@@ -51,7 +51,8 @@ const mongoUri = cs304.getMongoUri();
 
 // Use these constants and mispellings become errors
 const kdb = "kapchiydb";
-const POSTS = "movies";
+const POSTS = "posts";
+const USERS = "users";
 
 // Function for inserting posts: createPost.Post()
 const createPost = require('./createPost');
@@ -61,12 +62,23 @@ app.get('/', (req, res) => {
     return res.render('index.ejs');
 });
 
+// app.get('/posts' , async (req,res) => {
+
+// });
+
 app.get('/posts/:postid', async (req, res) => {
     let id = req.query.postid;
-    let db = await Connection.open(mongoUri, kdb);
+    const db = await Connection.open(mongoUri, kdb);
     let posts = db.collection(POSTS);
     let postResult = await posts.find({postId : id})
     return res.render('post.ejs', {post: postResult});
+});
+
+app.get('/search/:term', async (req, res) => {
+    let term = req.query.term;
+    const db = await Connection.open(mongoUri, kdb);
+    const posts = db.collection(POSTS);
+    let results = await posts.find({postId : id})
 });
 
 // app.get('/nm/:personid', async (req, res) => {
