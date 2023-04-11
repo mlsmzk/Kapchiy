@@ -19,6 +19,7 @@ const flash = require('express-flash');
 
 const { Connection } = require('./connection');
 const cs304 = require('./cs304');
+const createPost = require('./createPost');
 
 // Create and configure the app
 
@@ -51,6 +52,7 @@ const mongoUri = cs304.getMongoUri();
 
 // Use these constants and mispellings become errors
 const kdb = "kapchiydb";
+const POSTS = "movies";
 
 // main page. just has links to two other pages
 app.get('/', (req, res) => {
@@ -58,8 +60,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/posts/:postid', async (req, res) => {
+    let id = req.query.postid;
     const db = await Connection.open(mongoUri, kdb);
-    return res.render(list.ejs);
+    let posts = db.collection(POSTS);
+    let postResult = await posts.find({postId : id})
+    return res.render(post.ejs, {post: postResult});
 });
 
 // app.get('/nm/:personid', async (req, res) => {
