@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Kapchiy Userpage</title>
+    <!-- load local stylesheet (css) -->
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- loading jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <!--partial for navbar-->
+    <%- include("partials/navbar.ejs") %>
+
+
+    <h1><%=userId%>'s Page</h1>
+    <h2><%=userBio%></h2>
+
+    <h2><%= userPosts %></h2>
+    <ul></ul>
+
+    <ol>
+        <% list.forEach( (elt) => {%>
+        <li><%= elt %></li>
+        <% }); %>
+    </ol>
+
+
+
+
+  <!-- load local js -->
+  <script src="/main.js"></script>
+</body>
+</html>
