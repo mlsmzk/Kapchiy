@@ -67,6 +67,8 @@ app.get("/userpage/:userId", async (req,res) =>{
     return res.render("userpage.ejs");
 })
 
+
+
 // app.get('/nm/:personid', async (req, res) => {
 //     // Generate URL type for people in the WMDB database
 //     // Renders the person_list.ejs page with the queried person's WMDB information
