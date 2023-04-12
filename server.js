@@ -51,17 +51,46 @@ const mongoUri = cs304.getMongoUri();
 
 // Use these constants and mispellings become errors
 const kdb = "kapchiydb";
+const POSTS = "posts";
+const USERS = "users";
+
+// Function for inserting posts: createPost.Post()
+const createPost = require('./createPost');
 
 // main page. just has links to two other pages
 app.get('/', (req, res) => {
     return res.render('index.ejs');
 });
 
-app.get('/posts/:postid', async (req, res) => {
-    const db = await Connection.open(mongoUri, kdb);
-    return res.render(list.ejs);
+// app.get('/posts' , async (req,res) => {
+
+// });
+
+//userpage with specific id
+app.get('/userpage/:userId', (req,res)=> {
+    var userId = req.params.userId;
+    return res.render(`userpage.ejs/${userId}`);
 });
 
+app.get('/posts/:postid', async (req, res) => {
+    let id = req.query.postid;
+    const db = await Connection.open(mongoUri, kdb);
+    let posts = db.collection(POSTS);
+    let postResult = await posts.find({postId : id})
+    return res.render('post.ejs', {post: postResult});
+});
+
+app.get('/search/:term', async (req, res) => {
+    let term = req.query.term;
+    const db = await Connection.open(mongoUri, kdb);
+    const posts = db.collection(POSTS);
+    let results = await posts.find({postId : id});
+    // return res.render('list.ejs', {list: results});
+});
+
+app.get('/create', (req, res) => {
+    return res.render('create.ejs');
+})
 
 // app.get('/nm/:personid', async (req, res) => {
 //     // Generate URL type for people in the WMDB database
