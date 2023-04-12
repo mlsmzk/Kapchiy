@@ -69,7 +69,7 @@ app.get('/', (req, res) => {
 //userpage with specific id
 app.get('/userpage/:userId', (req,res)=> {
     var userId = req.params.userId;
-    return res.render(`userpage/${userId}`);
+    return res.render(`userpage.ejs/${userId}`);
 });
 
 app.get('/posts/:postid', async (req, res) => {
