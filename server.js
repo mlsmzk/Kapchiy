@@ -84,8 +84,13 @@ app.get('/search/:term', async (req, res) => {
     let term = req.query.term;
     const db = await Connection.open(mongoUri, kdb);
     const posts = db.collection(POSTS);
-    let results = await posts.find({postId : id})
+    let results = await posts.find({postId : id});
+    // return res.render('list.ejs', {list: results});
 });
+
+app.get('/create', (req, res) => {
+    return res.render('create.ejs');
+})
 
 // app.get('/nm/:personid', async (req, res) => {
 //     // Generate URL type for people in the WMDB database

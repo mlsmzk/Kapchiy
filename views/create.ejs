@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>People App</title>
+    <title>Kapchiy</title>
     <!-- load local stylesheet (css) -->
     <link rel="stylesheet" href="/styles.css" />
     <!-- loading jquery -->
@@ -10,12 +10,8 @@
 </head>
 <body>
     <%- include("partials/navbar.ejs") %>
+    <%- include("partials/file_upload.ejs") %>
 
-    <h1>Here's what post comes up:</h1>
-
-    <ol>
-        <li><%= post.caption  %></li>
-    </ol>
     <!-- load local js -->
     <script src="/main.js"></script>
 </body>
