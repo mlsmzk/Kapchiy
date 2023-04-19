@@ -137,7 +137,7 @@ app.get('/posts/:postid', async (req, res) => {
 app.get('/search/', (req, res) => {
     let term = req.query.term
     console.log('query' , req.query);
-    return res.redirect('/search/term');
+    return res.redirect('/search/' + term);
 });
 
 app.get('/search/:term', async (req, res) => {
