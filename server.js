@@ -153,13 +153,13 @@ app.get('/create', (req, res) => {
 })
 
 app.post('/create', upload.single('photo'), async (req, res) => {
-    const username = req.session.username;
-    if (!username) {
-        req.flash('info', "You are not logged in");
-        return res.redirect('/login');
-    }
-    console.log('uploaded data', req.body);
-    console.log('file', req.file);
+    // const username = req.session.username;
+    // if (!username) {
+    //     req.flash('info', "You are not logged in");
+    //     return res.redirect('/login');
+    // }
+    // console.log('uploaded data', req.body);
+    // console.log('file', req.file);
     // insert file data into mongodb
     const db = await Connection.open(mongoUri, kdb);
     const result = await db.collection(POSTS)
