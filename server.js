@@ -104,7 +104,8 @@ app.get('/', (req, res) => {
 app.get('/posts' , async (req,res) => {
     const db = await Connection.open(mongoUri, kdb);
     const allPosts = await db.collection(POSTS).find().toArray();
-    return res.render('posts.ejs', {userPosts : allPosts});
+    return res.render('posts.ejs', {postDesc  : "All Posts",
+                                    userPosts : allPosts});
 });
 
 //userpage with specific id
@@ -139,10 +140,10 @@ app.get('/search/:term', async (req, res) => {
     
     const posts = db.collection(POSTS);
     const reg = new RegExp(term, "i");
-    let matches = await posts.find({caption: reg}).toArray();
+    let matches = await posts.find({tags: reg}).toArray();
     console.log("match found:", matches);
-    return res.render('list.ejs', { listDescription: "Posts matching" + term,
-                                    list: matches});
+    return res.render('posts.ejs', {postDesc : "Posts matching" + reg,
+                                    userPosts: matches});
 });
 
 app.get('/create', (req, res) => {
@@ -164,7 +165,8 @@ app.post('/create', upload.single('photo'), async (req, res) => {
           .insertOne({title: req.body.title,
                       owner: username,
                       path: '/uploads/'+req.file.filename,
-                      caption: req.body.caption});
+                      caption: req.body.caption,
+                      tags: JSON.stringify(req.body.tags)});
     console.log('insertOne result', result);
     // always nice to confirm with the user
     req.flash('info', 'file uploaded');

@@ -11,7 +11,7 @@
 <body>
     <%- include("partials/navbar.ejs") %>
 
-    <h1>All Posts</h1>
+    <h1><%= postDesc %></h1>
 
     <% userPosts.forEach((post) => { %>
     <div>
@@ -20,6 +20,11 @@
             <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
             <figcaption><%= post.caption || 'Untitled' %></figcaption>
         </figure>
+        <h3>Tags:</h3>
+        <ol><% JSON.parse(post.tags).length > 0 ? tags.forEach((tag) => { %>
+            <li><%= tag %></li>
+        </ol>
+        <% }) : "No tags attached to this post"; %>
     </div>
     <% }); %>
     <!-- load local js -->
