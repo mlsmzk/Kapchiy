@@ -137,7 +137,7 @@ app.get('/posts/:postid', async (req, res) => {
 app.get('/search/:term', async (req, res) => {
     let term = req.query.term;
     const db = await Connection.open(mongoUri, kdb);
-    
+    console.log("term", term);
     const posts = db.collection(POSTS);
     const reg = new RegExp(term, "i");
     let matches = await posts.find({tags: reg}).toArray();
