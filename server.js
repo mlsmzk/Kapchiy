@@ -43,6 +43,29 @@ app.use(cookieSession({
     keys: [cs304.randomString(20)],
     maxAge: 60 * 1000 // 24 hours
   }))
+app.use('/uploads', express.static('uploads'));
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+        let parts = file.originalname.split('.');
+        let ext = parts[parts.length-1];
+        let hhmmss = timeString();
+        cb(null, file.fieldname + '-' + hhmmss + '.' + ext);
+    }
+  })
+var upload = multer({ storage: storage,
+    // max fileSize in bytes, causes an ugly error
+    limits: {fileSize: 8_000 }});
+
+// collections in the user's personal database
+
+const DB = process.env.USER;
+const FILESOWNED = 'filesOwned';
+const FILEOWNERS = 'fileOwners';
+
 
 const mongoUri = cs304.getMongoUri();
 
