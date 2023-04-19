@@ -12,10 +12,4 @@ h1 {
   display: block;
   width: 60px;
   background-color: #dddddd;
-  text-decoration: none;
-}
-
-#navbar li a:hover{
-  background-color: #555;
-  color: white;
 }
