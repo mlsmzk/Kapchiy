@@ -21,7 +21,7 @@ const multer = require('multer');
 
 const { Connection } = require('./connection');
 const cs304 = require('./cs304');
-const file = require('./file');
+const filefns = require('./file');
 
 // Create and configure the app
 
@@ -57,7 +57,7 @@ var storage = multer.diskStorage({
     filename: function (req, file, cb) {
         let parts = file.originalname.split('.');
         let ext = parts[parts.length-1];
-        let hhmmss = file.timeString();
+        let hhmmss = filefns.timeString();
         cb(null, file.fieldname + '-' + hhmmss + '.' + ext);
     }
   })
