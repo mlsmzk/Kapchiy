@@ -57,7 +57,8 @@ var storage = multer.diskStorage({
     filename: function (req, file, cb) {
         let parts = file.originalname.split('.');
         let ext = parts[parts.length-1];
-        let hhmmss = filefns.timeString();
+        // let hhmmss = filefns.timeString();
+        let hhmss = filefns.test();
         cb(null, file.fieldname + '-' + hhmmss + '.' + ext);
     }
   })

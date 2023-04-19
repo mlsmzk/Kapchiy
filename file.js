@@ -10,6 +10,10 @@ function timeString(dateObj) {
     return hh+mm+ss
 }
 
+function test(){
+    return ""
+}
+
 function isAuthorizedToView(viewerId, ownerId) {
     console.log('auth?', viewerId, ownerId);
     return viewerId === ownerId;
