@@ -21,11 +21,11 @@
             <figcaption><%= post.caption || 'Untitled' %></figcaption>
         </figure>
         <h3>Tags:</h3>
-        <ol>
+        <ul>
         <% if (post.tags) { %>
             <% post.tags.split(',').forEach((tag) => { %>
             <li><%= tag %></li>
-        </ol>
+        </ul>
             <% }); %>
         <% } else { %>
         <p>"No tags attached to this post"</p>

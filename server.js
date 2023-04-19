@@ -134,6 +134,12 @@ app.get('/posts/:postid', async (req, res) => {
     return res.render('post.ejs', {post: postResult});
 });
 
+app.get('/search/', (req, res) => {
+    let term = req.query.term
+    console.log('query' , req.query);
+    return res.redirect('/search/term');
+});
+
 app.get('/search/:term', async (req, res) => {
     let term = req.query.term;
     const db = await Connection.open(mongoUri, kdb);
@@ -142,7 +148,7 @@ app.get('/search/:term', async (req, res) => {
     const reg = new RegExp(term, "i");
     let matches = await posts.find({tags: reg}).toArray();
     console.log("match found:", matches);
-    return res.render('posts.ejs', {postDesc : "Posts matching" + reg,
+    return res.render('posts.ejs', {postDesc : "Posts matching" + reg.toString(), // make reg a string
                                     userPosts: matches});
 });
 
