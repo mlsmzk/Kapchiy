@@ -21,7 +21,7 @@
             <figcaption><%= post.caption || 'Untitled' %></figcaption>
         </figure>
         <h3>Tags:</h3>
-        <ol><% JSON.parse(post.tags).length > 0 ? tags.forEach((tag) => { %>
+        <ol><% post.tags.split(',').length > 0 ? post.tags.split(',').forEach((tag) => { %>
             <li><%= tag %></li>
         </ol>
         <% }) : "No tags attached to this post"; %>
