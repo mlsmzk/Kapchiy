@@ -1,13 +1,20 @@
-<form action="/upload" method="POST" enctype="multipart/form-data">
+<form action="/create" method="POST" enctype="multipart/form-data">
     <p>
-        <label for="caption">
-            <input type="text" name="caption" placeholder="photo caption">
+        <label for="title">Title
+            <input type="text" name="title" placeholder="photo title">
         </label>
-    </p><p>
-        <label>File Upload
+    </p>
+    <p>
+        <label>Filename
             <input type="file" accept="image/*" name="photo" >
         </label>
-    </p><p>
+    </p>
+    <p>
+        <label>Caption
+            <input type="text" name="caption">
+        </label>
+    </p>
+    <p>
         <input type="submit" value="Submit Uploads">
         <input type="reset" value="Reset">
     </p>

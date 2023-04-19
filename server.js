@@ -41,9 +41,11 @@ app.set('view engine', 'ejs');
 app.use(cookieSession({
     name: 'session',
     keys: [cs304.randomString(20)],
-    maxAge: 60 * 1000 // 24 hours
+    maxAge: 24* 60 * 60 * 1000// 24 hours
   }))
-app.use('/uploads', express.static('uploads'));
+
+
+  app.use('/uploads', express.static('uploads'));
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -62,10 +64,6 @@ var upload = multer({ storage: storage,
 
 // collections in the user's personal database
 
-const DB = process.env.USER;
-const FILESOWNED = 'filesOwned';
-const FILEOWNERS = 'fileOwners';
-
 
 const mongoUri = cs304.getMongoUri();
 
@@ -74,12 +72,13 @@ const mongoUri = cs304.getMongoUri();
 
 // Use these constants and mispellings become errors
 const kdb = "kapchiydb";
+const FILEOWNERS = 'fileOwners';
 const POSTS = "posts";
 const USERS = "users";
 
 // Function for inserting posts: createPost.Post()
 const createPost = require('./createPost');
-const fileName = require('./fileName.js');
+const fileName = require('./file.js');
 
 // main page. just has links to two other pages
 app.get('/', (req, res) => {
@@ -91,9 +90,18 @@ app.get('/', (req, res) => {
 // });
 
 //userpage with specific id
-app.get('/userpage/:userId', (req,res)=> {
-    var userId = req.params.userId;
-    return res.render(`userpage.ejs/${userId}`);
+app.get('/userpage/:userId', async (req,res)=> {
+    const db = await Connection.open(mongoUri, kdb);
+    const username = req.session.username;
+    if (!username) {
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    }
+    const uploads = await db.collection(FILESOWNED).find({owner: username}).toArray();
+    const users = await db.collection(FILEOWNERS).find({}).toArray();
+    const userId = req.session.userId;
+    return res.render('userpage.ejs', {username, userId, users, uploads});
 });
 
 app.get('/posts/:postid', async (req, res) => {
@@ -112,13 +120,37 @@ app.get('/search/:term', async (req, res) => {
     const db = await Connection.open(mongoUri, kdb);
     
     const posts = db.collection(POSTS);
-    let results = await posts.find({postId : id});
-    // return res.render('list.ejs', {list: results});
+    const reg = new RegExp(term, "i");
+    let matches = await posts.find({caption: reg}).toArray();
+    console.log("match found:", matches);
+    return res.render('list.ejs', { listDescription: "Posts matching" + term,
+                                    list: matches});
 });
 
 app.get('/create', (req, res) => {
     return res.render('create.ejs');
 })
+
+app.post('/create', upload.single('photo'), async (req, res) => {
+    const username = req.session.username;
+    if (!username) {
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    }
+    console.log('uploaded data', req.body);
+    console.log('file', req.file);
+    // insert file data into mongodb
+    const db = await Connection.open(mongoUri, kdb);
+    const result = await db.collection(POSTS)
+          .insertOne({title: req.body.title,
+                      owner: username,
+                      path: '/uploads/'+req.file.filename,
+                      caption: req.body.caption});
+    console.log('insertOne result', result);
+    // always nice to confirm with the user
+    req.flash('info', 'file uploaded');
+    return res.redirect('/');
+});
 
 // app.get('/nm/:personid', async (req, res) => {
 //     // Generate URL type for people in the WMDB database
@@ -203,6 +235,17 @@ app.get('/create', (req, res) => {
 
 // // ================================================================
 // // postlude
+app.use((err, req, res, next) => {
+    console.log('error', err);
+    if(err.code === 'LIMIT_FILE_SIZE') {
+        console.log('file too big')
+        req.flash('error', 'file too big')
+        res.redirect('/')
+    } else {
+        console.error(err.stack)
+        res.status(500).send('Something broke!')
+    }
+})
 
 const serverPort = cs304.getPort(8080);
 

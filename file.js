@@ -9,3 +9,8 @@ function timeString(dateObj) {
     let ss = d2(dateObj.getSeconds())
     return hh+mm+ss
 }
+
+function isAuthorizedToView(viewerId, ownerId) {
+    console.log('auth?', viewerId, ownerId);
+    return viewerId === ownerId;
+}
