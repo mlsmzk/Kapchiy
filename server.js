@@ -48,7 +48,7 @@ app.use(cookieSession({
   }))
 
 
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
 
 /* Functions for file uploading and security */
 function timeString(dateObj) {
