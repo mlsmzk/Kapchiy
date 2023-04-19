@@ -97,16 +97,19 @@ const createPost = require('./createPost');
 const fileName = require('./file.js');
 
 // main page. just has links to two other pages
-app.get('/', (req, res) => {
-    return res.render('index.ejs');
+app.get('/', async (req, res) => {
+    const db = await Connection.open(mongoUri, kdb);
+    const allPosts = await db.collection(POSTS).find().toArray();
+    return res.render('index.ejs', {
+                                    userPosts : allPosts});
 });
 
-app.get('/posts' , async (req,res) => {
+/* app.get('/posts' , async (req,res) => {
     const db = await Connection.open(mongoUri, kdb);
     const allPosts = await db.collection(POSTS).find().toArray();
     return res.render('posts.ejs', {postDesc  : "All Posts",
                                     userPosts : allPosts});
-});
+}); */
 
 //userpage with specific id
 app.get('/userpage/:userId', async (req,res)=> {
