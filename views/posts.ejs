@@ -25,8 +25,8 @@
         <% if (post.tags) { %>
             <% post.tags.split(',').forEach((tag) => { %>
             <li><%= tag %></li>
-        </ul>
             <% }); %>
+        </ul>
         <% } else { %>
         <p>"No tags attached to this post"</p>
         <% }; %>
