@@ -12,8 +12,8 @@ const express = require('express');
 const morgan = require('morgan');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
 const flash = require('express-flash');
+const cookieSession = require('cookie-session');
 
 // our modules loaded from cwd
 
@@ -56,6 +56,7 @@ const USERS = "users";
 
 // Function for inserting posts: createPost.Post()
 const createPost = require('./createPost');
+const fileName = require('./fileName.js');
 
 // main page. just has links to two other pages
 app.get('/', (req, res) => {
@@ -76,13 +77,17 @@ app.get('/posts/:postid', async (req, res) => {
     let id = req.query.postid;
     const db = await Connection.open(mongoUri, kdb);
     let posts = db.collection(POSTS);
-    let postResult = await posts.find({postId : id})
+    let check = await posts.find().toArray();
+    console.log("check", check);
+    let postResult = await posts.find({"postId" : parseInt(id)}).toArray();
+    console.log(postResult);
     return res.render('post.ejs', {post: postResult});
 });
 
 app.get('/search/:term', async (req, res) => {
     let term = req.query.term;
     const db = await Connection.open(mongoUri, kdb);
+    
     const posts = db.collection(POSTS);
     let results = await posts.find({postId : id});
     // return res.render('list.ejs', {list: results});
