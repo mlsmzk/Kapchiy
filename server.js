@@ -55,7 +55,6 @@ function timeString(dateObj) {
     if( !dateObj) {
         dateObj = new Date();
     }
-    // convert val to two-digit string
     d2 = (val) => val < 10 ? '0'+val : ''+val;
     let hh = d2(dateObj.getHours())
     let mm = d2(dateObj.getMinutes())
@@ -63,25 +62,21 @@ function timeString(dateObj) {
     return hh+mm+ss
 }
 
-function isAuthorizedToView(viewerId, ownerId) {
-    console.log('auth?', viewerId, ownerId);
-    return viewerId === ownerId;
-}
-
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads')
-    },
-    filename: function (req, file, cb) {
-        let parts = file.originalname.split('.');
-        let ext = parts[parts.length-1];
-        let hhmmss = timeString();
-        cb(null, file.fieldname + '-' + hhmmss + '.' + ext);
-    }
-  })
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+      let parts = file.originalname.split('.');
+      let ext = parts[parts.length-1];
+      let hhmmss = timeString();
+      cb(null, file.fieldname + '-' + hhmmss + '.' + ext);
+  }
+})
 var upload = multer({ storage: storage,
-    // max fileSize in bytes, causes an ugly error
-    limits: {fileSize: 8_000 }});
+                      // max fileSize in bytes
+                      limits: {fileSize: 1_000_000 }});
+
 
 // collections in the user's personal database
 
