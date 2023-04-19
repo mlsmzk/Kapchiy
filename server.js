@@ -157,6 +157,8 @@ app.post('/create', upload.single('photo'), async (req, res) => {
         req.flash('info', "You are not logged in");
         return res.redirect('/login');
     }
+    let tagString = req.body.tags;
+    let tagsList = tagString.split(',');
     console.log('uploaded data', req.body);
     console.log('file', req.file);
     // insert file data into mongodb
@@ -166,7 +168,7 @@ app.post('/create', upload.single('photo'), async (req, res) => {
                       owner: username,
                       path: '/uploads/'+req.file.filename,
                       caption: req.body.caption,
-                      tags: JSON.stringify(req.body.tags)});
+                      tags: JSON.stringify(tagsList)});
     console.log('insertOne result', result);
     // always nice to confirm with the user
     req.flash('info', 'file uploaded');
