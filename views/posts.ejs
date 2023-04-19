@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>People App</title>
+    <!-- load local stylesheet (css) -->
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- loading jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <%- include("partials/navbar.ejs") %>
+
+    <h1>All Posts</h1>
+
+    <% userPosts.forEach((post) => { %>
+    <div>
+        <h2><%= post.title %></h2>
+        <figure>
+            <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
+            <figcaption><%= post.caption || 'Untitled' %></figcaption>
+        </figure>
+    </div>
+    <% }); %>
+    <!-- load local js -->
+    <script src="/main.js"></script>
+</body>
+</html>

@@ -101,9 +101,11 @@ app.get('/', (req, res) => {
     return res.render('index.ejs');
 });
 
-// app.get('/posts' , async (req,res) => {
-
-// });
+app.get('/posts' , async (req,res) => {
+    const db = await Connection.open(mongoUri, kdb);
+    const allPosts = await db.collection(POSTS).find().toArray();
+    return res.render('posts.ejs', {userPosts : allPosts});
+});
 
 //userpage with specific id
 app.get('/userpage/:userId', async (req,res)=> {
@@ -252,6 +254,7 @@ app.post('/create', upload.single('photo'), async (req, res) => {
 
 // // ================================================================
 // // postlude
+
 app.use((err, req, res, next) => {
     console.log('error', err);
     if(err.code === 'LIMIT_FILE_SIZE') {
