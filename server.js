@@ -146,9 +146,11 @@ app.get('/search/:term', async (req, res) => {
     console.log("term", term);
     const posts = db.collection(POSTS);
     const reg = new RegExp(term, "i");
+    let regString = reg.toString();
+    regString = regString.slice(1, len(regString) - 1);
     let matches = await posts.find({tags: reg}).toArray();
     console.log("match found:", matches);
-    return res.render('posts.ejs', {postDesc : "Posts matching" + reg.toString(), // make reg a string
+    return res.render('posts.ejs', {postDesc : "Posts matching" + regString,
                                     userPosts: matches});
 });
 
