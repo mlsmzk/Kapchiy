@@ -21,12 +21,17 @@
             <figcaption><%= post.caption || 'Untitled' %></figcaption>
         </figure>
         <h3>Tags:</h3>
-        <ol><% post.tags.split(',').length > 0 ? post.tags.split(',').forEach((tag) => { %>
+        <ol>
+        <% if (post.tags) { %>
+            <% post.tags.split(',').forEach((tag) => { %>
             <li><%= tag %></li>
         </ol>
-        <% }) : "No tags attached to this post"; %>
+            <% }); %>
+        <% } else { %>
+        <p>"No tags attached to this post"</p>
+        <% }; %>
     </div>
-    <% }); %>
+        <% }); %>
     <!-- load local js -->
     <script src="/main.js"></script>
 </body>
