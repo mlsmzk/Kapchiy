@@ -141,7 +141,7 @@ app.get('/search/', (req, res) => {
 });
 
 app.get('/search/:term', async (req, res) => {
-    let term = req.query.term;
+    let term = req.params.term;
     const db = await Connection.open(mongoUri, kdb);
     console.log("term", term);
     const posts = db.collection(POSTS);
