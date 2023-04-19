@@ -12,8 +12,8 @@ const express = require('express');
 const morgan = require('morgan');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
 const flash = require('express-flash');
+const cookieSession = require('cookie-session');
 
 // our modules loaded from cwd
 
@@ -43,6 +43,29 @@ app.use(cookieSession({
     keys: [cs304.randomString(20)],
     maxAge: 60 * 1000 // 24 hours
   }))
+app.use('/uploads', express.static('uploads'));
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+        let parts = file.originalname.split('.');
+        let ext = parts[parts.length-1];
+        let hhmmss = timeString();
+        cb(null, file.fieldname + '-' + hhmmss + '.' + ext);
+    }
+  })
+var upload = multer({ storage: storage,
+    // max fileSize in bytes, causes an ugly error
+    limits: {fileSize: 8_000 }});
+
+// collections in the user's personal database
+
+const DB = process.env.USER;
+const FILESOWNED = 'filesOwned';
+const FILEOWNERS = 'fileOwners';
+
 
 const mongoUri = cs304.getMongoUri();
 
@@ -56,6 +79,7 @@ const USERS = "users";
 
 // Function for inserting posts: createPost.Post()
 const createPost = require('./createPost');
+const fileName = require('./fileName.js');
 
 // main page. just has links to two other pages
 app.get('/', (req, res) => {
@@ -76,13 +100,17 @@ app.get('/posts/:postid', async (req, res) => {
     let id = req.query.postid;
     const db = await Connection.open(mongoUri, kdb);
     let posts = db.collection(POSTS);
-    let postResult = await posts.find({postId : id})
+    let check = await posts.find().toArray();
+    console.log("check", check);
+    let postResult = await posts.find({"postId" : parseInt(id)}).toArray();
+    console.log(postResult);
     return res.render('post.ejs', {post: postResult});
 });
 
 app.get('/search/:term', async (req, res) => {
     let term = req.query.term;
     const db = await Connection.open(mongoUri, kdb);
+    
     const posts = db.collection(POSTS);
     let results = await posts.find({postId : id});
     // return res.render('list.ejs', {list: results});
