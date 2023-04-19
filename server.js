@@ -14,6 +14,8 @@ const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const cookieSession = require('cookie-session');
+const multer = require('multer');
+
 
 // our modules loaded from cwd
 
