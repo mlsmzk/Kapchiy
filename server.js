@@ -255,6 +255,32 @@ app.post('/create', upload.single('photo'), async (req, res) => {
 // // ================================================================
 // // postlude
 
+// Route for getting images/other files from uploads
+app.get('/uploads/:file', async (req, res) => {
+    const filename = req.params.file;
+    console.log('getting', filename);
+    // const username = req.session.username;
+    // if (!username) {
+    //     req.flash('info', "You are not logged in");
+    //     return res.redirect('/login');
+    // }
+    const db = await Connection.open(mongoUri, kdb);
+    const pathname = '/uploads/'+filename;
+    const fileDoc = await db.collection(POSTS).findOne({path: pathname});
+    if(!fileDoc) {
+        console.log("no such file");
+        req.flash('error', "No such file");
+        return res.redirect('/');
+    }
+    // if(!isAuthorizedToView(username, fileDoc.owner)) {
+    //     console.log("not authorized");
+    //     req.flash('info', "You are not authorized to view this file")
+    //     return res.redirect('/myphotos');
+    // }
+    return res.sendFile(path.join(__dirname, pathname));
+});
+
+// Error route, belongs at end of code
 app.use((err, req, res, next) => {
     console.log('error', err);
     if(err.code === 'LIMIT_FILE_SIZE') {
