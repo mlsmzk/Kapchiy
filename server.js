@@ -167,9 +167,9 @@ app.post('/login', async (req,res) => {
 app.get('/userpage/:userId', async (req,res)=> {
     const db = await Connection.open(mongoUri, kdb);
     const username = req.params.userId;
-    const uploads = await db.collection(FILESOWNED).find({owner: username}).toArray();
+    const uploads = await db.collection(POSTS).find({owner: username}).toArray();
     console.log("list of file owned by user", username);
-    const users = await db.collection(FILEOWNERS).find({}).toArray();
+    const users = await db.collection(USERS).find({}).toArray();
     console.log("list of file owners", users);
     
     let userAcc = await db.collection(USERS).find({username: username}).toArray()[0];
