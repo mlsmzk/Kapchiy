@@ -169,10 +169,9 @@ app.get('/userpage/:userId', async (req,res)=> {
     const username = req.params.userId;
     const uploads = await db.collection(POSTS).find({owner: username}).toArray();
     console.log("list of file owned by user", username);
-    const users = await db.collection(USERS).find({}).toArray();
-    console.log("list of file owners", users);
     
-    let userAcc = await db.collection(USERS).find({username: username}).toArray()[0];
+    let userAcc = await db.collection(USERS).find({username: username}).toArray();
+    userAcc = userAcc[0];
     let userBio = userAcc.bio;
     let userPosts = await db.collection(POSTS).find({owner: username}).toArray();
     console.log("userAcc", userAcc);
