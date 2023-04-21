@@ -173,12 +173,11 @@ app.get('/userpage/:userId', async (req,res)=> {
     console.log("list of file owners", users);
     
     let userAcc = await db.collection(USERS).find({username: username}).toArray()[0];
-    let userId = userAcc._id;
     let userBio = userAcc.bio;
     let userPosts = await db.collection(POSTS).find({owner: username}).toArray();
     console.log("userAcc", userAcc);
     console.log("userPosts", userPosts);
-    return res.render('userpage.ejs', {username, userId, userPosts, uploads, userBio});
+    return res.render('userpage.ejs', {username, userPosts, uploads, userBio});
 });
 
 app.get('/posts/:postid', async (req, res) => {
