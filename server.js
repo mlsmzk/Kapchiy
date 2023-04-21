@@ -123,7 +123,7 @@ app.get('/login',(req,res) => {
 
 app.post('/register', async (req,res) => {
     const username = req.body.username;
-    const db = await Connection.open(mongoUri, DB);
+    const db = await Connection.open(mongoUri, kdb);
     const usersCol = db.collection(USERS);
     const existingUsers = await usersCol.find({username: username}).toArray();
     console.log("existingUsers:", existingUsers);
@@ -145,7 +145,7 @@ app.post('/register', async (req,res) => {
 app.post('/login', async (req,res) => {
     const username = req.body.username;
     const password = req.body.password;
-    const db = await Connection.open(mongoUri, DB);
+    const db = await Connection.open(mongoUri, kdb);
     var existingUser = await db.collection(USERS).findOne({username: username});
     if (existingUser.length === 0 ) {
         console.log("Username not found");
