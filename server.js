@@ -22,6 +22,7 @@ const multer = require('multer');
 const { Connection } = require('./connection');
 const cs304 = require('./cs304');
 const filefns = require('./file');
+const { userAgentMiddleware } = require('@aws-sdk/middleware-user-agent');
 
 // Create and configure the app
 
@@ -92,16 +93,21 @@ const FILEOWNERS = 'fileOwners';
 const POSTS = "posts";
 const USERS = "users";
 
-// Function for inserting posts: createPost.Post()
-const createPost = require('./createPost');
-const fileName = require('./file.js');
-
 // main page. just has links to two other pages
 app.get('/', async (req, res) => {
-    const db = await Connection.open(mongoUri, kdb);
-    const allPosts = await db.collection(POSTS).find().toArray();
-    return res.render('index.ejs', {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
+        // Signed in case
+        const db = await Connection.open(mongoUri, kdb);
+        const allPosts = await db.collection(POSTS).find().toArray();
+        return res.render('index.ejs', {
                                     userPosts : allPosts});
+    }
 });
 
 /* app.get('/posts' , async (req,res) => {
@@ -111,19 +117,68 @@ app.get('/', async (req, res) => {
                                     userPosts : allPosts});
 }); */
 
+app.get('/login',(req,res) => {
+    return res.render('login.ejs');
+});
+
+app.post('/register', async (req,res) => {
+    const username = req.body.username;
+    const db = await Connection.open(mongoUri, DB);
+    const usersCol = db.collection(USERS);
+    const existingUsers = await usersCol.find({username: username}).toArray();
+    console.log("existingUsers:", existingUsers);
+    if (existingUsers.length > 0 ) {
+        console.log("already exists");
+        req.flash('error',
+                  "A user with that username already exists.");
+        return res.render('login.ejs');
+    } else {
+        const password = req.body.password;
+        const results = await usersCol.insertOne({username, password, bio: "", followers: [], following: []});
+        console.log('created user', results);
+        req.session.username = req.body.username;
+        req.session.userId = results.insertedId.toString();
+        return res.redirect('/userpage/' + req.session.username);
+    }
+});
+
+app.post('/login', async (req,res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const db = await Connection.open(mongoUri, DB);
+    var existingUser = await db.collection(USERS).findOne({username: username});
+    if (existingUser.length === 0 ) {
+        console.log("Username not found");
+        req.flash('error', "Username not found");
+        return res.render('login.ejs')
+    }
+    if (existingUser.password !== password) {
+        console.log("Incorrect password");
+        req.flash('error', "Incorrect password");
+        return res.render('login.ejs');
+    } 
+    req.session.userId = existingUser._id.toString();
+    req.session.username = existingUser.username;
+    console.log('logged in as', username, existingUser);
+    return res.redirect('/userpage/' + username);
+});
+
 //userpage with specific id
 app.get('/userpage/:userId', async (req,res)=> {
     const db = await Connection.open(mongoUri, kdb);
-    const username = req.session.username;
-    if (!username) {
-        console.log("not logged in");
-        req.flash('info', "You are not logged in");
-        return res.redirect('/login');
-    }
+    const username = req.params.userId;
     const uploads = await db.collection(FILESOWNED).find({owner: username}).toArray();
+    console.log("list of file owned by user", username);
     const users = await db.collection(FILEOWNERS).find({}).toArray();
-    const userId = req.session.userId;
-    return res.render('userpage.ejs', {username, userId, users, uploads});
+    console.log("list of file owners", users);
+    
+    let userAcc = await db.collection(USERS).find({username: username}).toArray()[0];
+    let userId = userAcc._id;
+    let userBio = userAcc.bio;
+    let userPosts = await db.collection(POSTS).find({owner: username}).toArray();
+    console.log("userAcc", userAcc);
+    console.log("userPosts", userPosts);
+    return res.render('userpage.ejs', {username, userId, userPosts, uploads, userBio});
 });
 
 app.get('/posts/:postid', async (req, res) => {

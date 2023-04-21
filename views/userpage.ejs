@@ -18,9 +18,23 @@
 
     <h2><%= userPosts %></h2>
     <div id="userPosts">
-        <% images.forEach((image) => {%>
-            <a href ="#"><img src ="<%=image.url%>"></a>
-        <% }) %>
+        <% userPosts.forEach((image) => {%>
+        <h2><%= post.title %></h2>
+        <figure>
+            <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
+            <figcaption><%= post.caption || 'Untitled' %></figcaption>
+        </figure>
+        <h3>Tags:</h3>
+        <ul>
+        <% if (post.tags) { %>
+            <% post.tags.split(',').forEach((tag) => { %>
+            <li><%= tag %></li>
+            <% }); %>
+        </ul>
+        <% } else { %>
+        <p>"No tags attached to this post"</p>
+        <% }; %>
+        <% }); %>
     </div>
 
 
