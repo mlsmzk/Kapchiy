@@ -173,6 +173,7 @@ app.get('/userpage/:userId', async (req,res)=> {
     
     let userAcc = await db.collection(USERS).find({username: username}).toArray();
     userAcc = userAcc[0];
+    console.log("userAcc: ", userAcc);
     let userBio = userAcc.bio;
     let userPosts = await db.collection(POSTS).find({owner: username}).toArray();
     console.log("userAcc", userAcc);
@@ -217,7 +218,7 @@ app.get('/create', (req, res) => {
 
 app.post('/create', upload.single('photo'), async (req, res) => {
     // const username = req.session.username;
-    const username = "miles";
+    const username = req.session.username;
     if (!username) {
         req.flash('info', "You are not logged in");
         return res.redirect('/login');
