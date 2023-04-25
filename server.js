@@ -164,7 +164,7 @@ app.post('/login', async (req,res) => {
     return res.redirect('/userpage/' + username);
 });
 
-//userpage with specific id
+//renderes userpage with specific id
 app.get('/userpage/:userId', async (req,res)=> {
     const db = await Connection.open(mongoUri, kdb);
     const username = req.params.userId;
@@ -218,7 +218,7 @@ app.get('/create', (req, res) => {
 
 app.post('/create', upload.single('photo'), async (req, res) => {
     // const username = req.session.username;
-    const username = req.session.username;
+    const username = "miles";
     if (!username) {
         req.flash('info', "You are not logged in");
         return res.redirect('/login');
