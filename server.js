@@ -96,6 +96,7 @@ const USERS = "users";
 // main page. just has links to two other pages
 app.get('/', async (req, res) => {
     const username = req.session.username;
+    console.log("session username", username);
     if (!username) {
         // Not logged in / signed up case
         console.log("not logged in");
