@@ -18,7 +18,7 @@
     <h2 id="followers">Followers: <%=user.followers%></h2>
     <h2 id="following">Following: <%=user.following%></h2>
     <% if (user !== username) { %>
-        <form action="/addFollower" method="POST">
+        <form action="/addFollower/<%= user %>" method="POST">
             <button class="followBtn" type="button" name="<%= user %>">
                 Follow <%= user %>
               </button>
