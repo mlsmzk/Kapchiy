@@ -298,7 +298,7 @@ app.post('/create', upload.single('photo'), async (req, res) => {
     return res.redirect('/');
 });
 
-app.post('/addFolower/:user', async (req,res) => {
+app.post('/addFollower/:user', async (req,res) => {
     let user = req.params.user;
     const db = await Connection.open(mongoUri, kdb);
     const session_user = await db.collection(USERS).find({username: req.session.username}).toArray[0];
