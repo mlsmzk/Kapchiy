@@ -5,20 +5,12 @@ h1 {
   color: #EEE9DA;
   text-align: center;
 }
-div.form
+div.searchForm
 {
     display: block;
     text-align: center;
     padding: 10px;
 }
-form
-{
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-}
-
 
 #navbar{
   list-style-type: none;

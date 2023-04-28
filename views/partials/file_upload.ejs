@@ -1,26 +1,28 @@
-<form action="/create" method="POST" enctype="multipart/form-data">
-    <p>
-        <label for="title">Title
-            <input type="text" name="title" placeholder="photo title">
-        </label>
-    </p>
-    <p>
-        <label>Filename
-            <input type="file" accept="image/*" name="photo" >
-        </label>
-    </p>
-    <p>
-        <label>Caption
-            <input type="text" name="caption">
-        </label>
-    </p>
-    <p>
-        <label>Tags (separate by ,)
-            <input type="text" name="tags">
-        </label>
-    </p>
-    <p>
-        <input type="submit" value="Submit Uploads">
-        <input type="reset" value="Reset">
-    </p>
-</form>
+<div class="form">
+    <form action="/create" method="POST" enctype="multipart/form-data">
+        <p>
+            <label for="title">Title
+                <input type="text" name="title" placeholder="photo title">
+            </label>
+        </p>
+        <p>
+            <label>Filename
+                <input type="file" accept="image/*" name="photo" >
+            </label>
+        </p>
+        <p>
+            <label>Caption
+                <input type="text" name="caption">
+            </label>
+        </p>
+        <p>
+            <label>Tags (separate by ,)
+                <input type="text" name="tags">
+            </label>
+        </p>
+        <p>
+            <input type="submit" value="Submit Uploads">
+            <input type="reset" value="Reset">
+        </p>
+    </form>
+</div>
