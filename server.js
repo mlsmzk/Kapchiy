@@ -227,6 +227,19 @@ app.get('/search/', (req, res) => {
     }
 });
 
+app.get('/query', (req, res) => {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
+        let query = req.query.term;
+        res.redirect('/search/' + query);
+    }
+});
+
 app.get('/search/:term', async (req, res) => {
     const username = req.session.username;
     if (!username) {
