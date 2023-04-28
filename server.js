@@ -49,7 +49,7 @@ app.use(cookieSession({
   }))
 
   app.use(function(req, res, next) {
-    res.locals.user = req.session.user;
+    res.locals.username = req.session.username;
     next();
   });
 
