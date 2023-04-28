@@ -10,15 +10,19 @@
 </head>
 <body>
     <!--partial for navbar-->
-    <%- include("partials/navbar.ejs") %>
+    <%- include("partials/navbar_logged_in.ejs") %>
 
-
-    <h1><%=username %>'s Page</h1>
+    <!--Header of the page of the user: name, bio, following-->
+    <h1><%=user %>'s Page</h1>
     <h2><%=userBio%></h2>
+    <h2>Followers <%=user.followers%></h2>
+    <h2>Following <%=user.following%></h2>
 
+    <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
+    <!--User posts-->
     <h2><%= userPosts %></h2>
     <div id="userPosts">
-        <% userPosts.forEach((image) => {%>
+        <% userPosts.forEach((post) => {%>
         <h2><%= post.title %></h2>
         <figure>
             <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">

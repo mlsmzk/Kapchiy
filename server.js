@@ -48,6 +48,11 @@ app.use(cookieSession({
     maxAge: 24* 60 * 60 * 1000// 24 hours
   }))
 
+  app.use(function(req, res, next) {
+    res.locals.username = req.session.username;
+    next();
+  });
+
 
 // app.use('/uploads', express.static('uploads'));
 
@@ -96,6 +101,7 @@ const USERS = "users";
 // main page. just has links to two other pages
 app.get('/', async (req, res) => {
     const username = req.session.username;
+    console.log("session username", username);
     if (!username) {
         // Not logged in / signed up case
         console.log("not logged in");
@@ -106,6 +112,7 @@ app.get('/', async (req, res) => {
         const db = await Connection.open(mongoUri, kdb);
         const allPosts = await db.collection(POSTS).find().toArray();
         return res.render('index.ejs', {
+                                    username : username,
                                     userPosts : allPosts});
     }
 });
@@ -146,12 +153,13 @@ app.post('/login', async (req,res) => {
     const username = req.body.username;
     const password = req.body.password;
     const db = await Connection.open(mongoUri, kdb);
-    var existingUser = await db.collection(USERS).findOne({username: username});
-    if (existingUser.length === 0 ) {
+    var existingUsers = await db.collection(USERS).find({username: username}).toArray();
+    if (existingUsers.length === 0 ) {
         console.log("Username not found");
         req.flash('error', "Username not found");
         return res.render('login.ejs')
     }
+    existingUser = existingUsers[0];
     if (existingUser.password !== password) {
         console.log("Incorrect password");
         req.flash('error', "Incorrect password");
@@ -163,23 +171,39 @@ app.post('/login', async (req,res) => {
     return res.redirect('/userpage/' + username);
 });
 
-//userpage with specific id
+//renderes userpage with specific id
 app.get('/userpage/:userId', async (req,res)=> {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
     const db = await Connection.open(mongoUri, kdb);
-    const username = req.params.userId;
+    const user = req.params.userId;
     const uploads = await db.collection(POSTS).find({owner: username}).toArray();
     console.log("list of file owned by user", username);
     
     let userAcc = await db.collection(USERS).find({username: username}).toArray();
     userAcc = userAcc[0];
+    console.log("userAcc: ", userAcc);
     let userBio = userAcc.bio;
     let userPosts = await db.collection(POSTS).find({owner: username}).toArray();
     console.log("userAcc", userAcc);
     console.log("userPosts", userPosts);
-    return res.render('userpage.ejs', {username, userPosts, uploads, userBio});
+    return res.render('userpage.ejs', {user, userPosts, uploads, userBio});
+    }
 });
 
 app.get('/posts/:postid', async (req, res) => {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
     let id = req.query.postid;
     const db = await Connection.open(mongoUri, kdb);
     let posts = db.collection(POSTS);
@@ -188,15 +212,31 @@ app.get('/posts/:postid', async (req, res) => {
     let postResult = await posts.find({"postId" : parseInt(id)}).toArray();
     console.log(postResult);
     return res.render('post.ejs', {post: postResult});
+    }
 });
 
 app.get('/search/', (req, res) => {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
     let term = req.query.term
     console.log('query' , req.query);
     return res.redirect('/search/' + term);
+    }
 });
 
 app.get('/search/:term', async (req, res) => {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
     let term = req.params.term;
     const db = await Connection.open(mongoUri, kdb);
     console.log("term", term);
@@ -208,10 +248,19 @@ app.get('/search/:term', async (req, res) => {
     console.log("match found:", matches);
     return res.render('posts.ejs', {postDesc : "Posts matching " + regString,
                                     userPosts: matches});
+    }
 });
 
 app.get('/create', (req, res) => {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
     return res.render('create.ejs');
+    }
 })
 
 app.post('/create', upload.single('photo'), async (req, res) => {
@@ -243,6 +292,13 @@ app.post('/create', upload.single('photo'), async (req, res) => {
 
 // Route for getting images/other files from uploads
 app.get('/uploads/:file', async (req, res) => {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
     const filename = req.params.file;
     console.log('getting', filename);
     // const username = req.session.username;
@@ -264,6 +320,7 @@ app.get('/uploads/:file', async (req, res) => {
     //     return res.redirect('/myphotos');
     // }
     return res.sendFile(path.join(__dirname, pathname));
+    }
 });
 
 // Error route, belongs at end of code
