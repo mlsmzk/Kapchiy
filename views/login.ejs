@@ -1,27 +1,39 @@
-<h2>Register:</h2>
-<p>
-    <form action="/register" method="POST" id="register-form">
-        <label> Username
-            <input type="text" name="username" placeholder="username123">
-        </label>
-        <label> Password
-            <input type="text" name="password" placeholder="*******">
-        </label>
-    <button type="submit">register</button>
-    </form>
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>People App</title>
+    <!-- load local stylesheet (css) -->
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- loading jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body style="background-color: #93BFCF;">
 
-<h2>Login:</h2>
-  <p id="login-holder">
-    <form action="/login" method="POST" id="login-form">
-        <label> Username
-            <input type="text" name="username" placeholder="og102">
-        </label>
-        <label> Password
-            <input type="text" name="password" placeholder="********">
-        </label>
-      <button type="submit">login</button>
-    </form>
-  </p>
+    <div class="form"> 
+        <h1 id="login-header">Login</h1>
 
- <link rel="stylesheet" href="../public/styles.css">
+        <form action="/login" method="POST" id="login-form">
+            <label> Username
+                <input type="text" name="username" placeholder="og102">
+            </label>
+            <label> Password
+                <input type="text" name="password" placeholder="********">
+            </label>
+        <button type="submit">login</button>
+        </form>
+    </div>
+
+    <div class="form">
+        <h1 id="register-form">Register</h1>
+        <form action="/register" method="POST" id="register-form">
+            <label> Username
+                <input type="text" name="username" placeholder="username123">
+            </label>
+            <label> Password
+                <input type="text" name="password" placeholder="*******">
+            </label>
+        <button type="submit">register</button>
+        </form>
+    </div>
+</body>

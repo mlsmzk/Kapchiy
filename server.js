@@ -148,12 +148,13 @@ app.post('/login', async (req,res) => {
     const username = req.body.username;
     const password = req.body.password;
     const db = await Connection.open(mongoUri, kdb);
-    var existingUser = await db.collection(USERS).findOne({username: username});
-    if (existingUser.length === 0 ) {
+    var existingUsers = await db.collection(USERS).find({username: username}).toArray();
+    if (existingUsers.length === 0 ) {
         console.log("Username not found");
         req.flash('error', "Username not found");
         return res.render('login.ejs')
     }
+    existingUser = existingUsers[0];
     if (existingUser.password !== password) {
         console.log("Incorrect password");
         req.flash('error', "Incorrect password");
