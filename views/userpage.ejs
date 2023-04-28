@@ -17,6 +17,13 @@
     <h2><%=userBio%></h2>
     <h2>Followers <%=user.followers%></h2>
     <h2>Following <%=user.following%></h2>
+    <% if (user !== username) { %>
+        <form action="POST">
+            <button class="followBtn" type="button" name="<%= user %>">
+                Follow <%= user %>
+              </button>
+        </form>
+    <% }; %>
 
     <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
     <!--User posts-->

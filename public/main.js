@@ -35,3 +35,34 @@ $("#login-ajax").click(loginAjax);
 
 console.log('main.js loaded');
 
+$(".followBtn").on('click', function (event) {
+
+    addFollower(user);
+  });
+
+
+// a simple response handler you can use in raw debugging or demos
+
+function showResponse(resp) {
+  console.log('response is: ', resp);
+}
+
+// The response handler that the app uses in practice.
+
+function processAction(resp) {
+    console.log('response is ',resp);
+    if (resp.error) {
+        alert('Error: '+resp.error);
+    }
+    console.log("this worked");
+    // $(`[data-tt=${resp.tt}]`).find('.likeCounter').text(resp.likes);
+}
+
+// functions to like/dislike movie with ajax
+
+function addFollower(user) {
+    // $.ajax("/likeAjax/"+tt, {method: 'POST', data: {tt: tt}, success: processAction});
+    $.post("/addFollower/"+user, {user: user}).then(processAction);
+}
+
+
