@@ -223,9 +223,20 @@ app.get('/search/', (req, res) => {
         req.flash('info', "You are not logged in");
         return res.redirect('/login');
     } else {
-    let term = req.query.term
-    console.log('query' , req.query);
-    return res.redirect('/search/' + term);
+        res.render("search.ejs");
+    }
+});
+
+app.get('/query', (req, res) => {
+    const username = req.session.username;
+    if (!username) {
+        // Not logged in / signed up case
+        console.log("not logged in");
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    } else {
+        let query = req.query.term;
+        res.redirect('/search/' + query);
     }
 });
 
