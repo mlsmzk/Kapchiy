@@ -298,6 +298,15 @@ app.post('/create', upload.single('photo'), async (req, res) => {
     return res.redirect('/');
 });
 
+app.post('/addFolower/:user', async (req,res) => {
+    let user = req.params.user;
+    const db = await Connection.open(mongoUri, kdb);
+    const session_user = await db.collection(USERS).find({username: req.session.username}).toArray[0];
+    const num_followers = await db.collection(USERS).find({username : user}).toArray()[0].followers.length;
+    const res = await db.collection(USERS).updateOne({username : user}, {$push: {followers: session_user}});
+    return res.json({error: false, followers: num_followers + 1});
+});
+
 // // ================================================================
 // // postlude
 

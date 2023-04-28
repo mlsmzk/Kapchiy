@@ -55,7 +55,7 @@ function processAction(resp) {
         alert('Error: '+resp.error);
     }
     console.log("this worked");
-    // $(`[data-tt=${resp.tt}]`).find('.likeCounter').text(resp.likes);
+    $('#followers').text("Followers: " + resp.followers);
 }
 
 // functions to like/dislike movie with ajax
