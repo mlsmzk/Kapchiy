@@ -48,6 +48,11 @@ app.use(cookieSession({
     maxAge: 24* 60 * 60 * 1000// 24 hours
   }))
 
+  app.use(function(req, res, next) {
+    res.locals.user = req.session.user;
+    next();
+  });
+
 
 // app.use('/uploads', express.static('uploads'));
 
