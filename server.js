@@ -200,17 +200,15 @@ app.get('/userpage/:userId', async (req,res)=> {
     } else {
     const db = await Connection.open(mongoUri, kdb);
     const user = req.params.userId;
-    const uploads = await db.collection(POSTS).find({owner: username}).toArray();
-    console.log("list of file owned by user", username);
-    
-    let userAcc = await db.collection(USERS).find({username: username}).toArray();
-    userAcc = userAcc[0];
-    console.log("userAcc: ", userAcc);
-    let userBio = userAcc.bio;
-    let userPosts = await db.collection(POSTS).find({owner: username}).toArray();
-    console.log("userAcc", userAcc);
+    let user_db = await db.collection(USERS).find({username : user}).toArray();
+    let userBio = user_db.bio;
+    console.log("user's bio: ", userBio);
+    let userPosts = await db.collection(POSTS).find({owner: user}).toArray();
+    console.log("list of file owned by user", user);
     console.log("userPosts", userPosts);
-    return res.render('userpage.ejs', {user, userPosts, uploads, userBio});
+    let followers = user_db.followers;
+    let following = user_db.following;
+    return res.render('userpage.ejs', {user, userPosts, uploads, userBio, followers, following});
     }
 });
 
