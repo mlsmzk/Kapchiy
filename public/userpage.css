@@ -2,3 +2,8 @@ h1 {
     color: darkslategray;
     text-align: left;
 }
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
