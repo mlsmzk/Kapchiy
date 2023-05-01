@@ -303,8 +303,7 @@ app.get('/create', (req, res) => {
 })
 
 app.post('/create', upload.single('photo'), async (req, res) => {
-    // const username = req.session.username;
-    const username = "miles";
+    const username = req.session.username;
     if (!username) {
         req.flash('info', "You are not logged in");
         return res.redirect('/login');
