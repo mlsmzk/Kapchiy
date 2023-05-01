@@ -200,6 +200,7 @@ app.get('/userpage/:userId', async (req,res)=> {
     } else {
     const db = await Connection.open(mongoUri, kdb);
     const user = req.params.userId;
+    // const uploads = await db.collection(POSTS).find({owner: user}).toArray();
     let user_db = await db.collection(USERS).find({username : user}).toArray();
     let userBio = user_db.bio;
     console.log("user's bio: ", userBio);
@@ -208,7 +209,7 @@ app.get('/userpage/:userId', async (req,res)=> {
     console.log("userPosts", userPosts);
     let followers = user_db.followers;
     let following = user_db.following;
-    return res.render('userpage.ejs', {user, userPosts, uploads, userBio, followers, following});
+    return res.render('userpage.ejs', {user, userPosts, userBio, followers, following});
     }
 });
 
