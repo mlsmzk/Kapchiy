@@ -202,6 +202,8 @@ app.get('/userpage/:userId', async (req,res)=> {
     const user = req.params.userId;
     // const uploads = await db.collection(POSTS).find({owner: user}).toArray();
     let user_db = await db.collection(USERS).find({username : user}).toArray();
+    user_db = user_db[0];
+    console.log("user_db is: ", user_db);
     let userBio = user_db.bio;
     console.log("user's bio: ", userBio);
     let userPosts = await db.collection(POSTS).find({owner: user}).toArray();
