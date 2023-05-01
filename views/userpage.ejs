@@ -19,9 +19,10 @@
         <h1><%=user %></h1>
         <div class="flex-container"> <!-- flex container -->
             <h2 id="bio"><%=userBio%></h2>
-            <ul id="follow-list" style="list-style: none;">
-                <li><h2 id="following">Following: <%=following.length%></h2></li>
-                <li><h2 id="followers">Followers: <%=followers.length%></h2></li>
+            <ul id="profile-list" style="list-style: none;">
+                <li><h2 id="posts-count"><strong><%=userPosts.length%></strong> posts</h2></li>
+                <li><h2 id="following"><strong><%=following.length%></strong> following</h2></li>
+                <li><h2 id="followers"><strong><%=followers.length%></strong> followers</h2></li>
             </ul>
             <% if (user !== username) { %>
                 <form action="/addFollower/<%= user %>" method="POST">
