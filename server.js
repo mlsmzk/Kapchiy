@@ -321,6 +321,7 @@ app.post('/addFollower/:user', async (req,res) => {
     let user = req.params.user;
     const db = await Connection.open(mongoUri, kdb);
     const session_user = await db.collection(USERS).find({username: req.session.username}).toArray[0];
+    console.log("session_user:", session_user);
     console.log("session_user is ", session_user.username);
     const num_followers = await db.collection(USERS).find({username : user}).toArray()[0].followers.length;
     console.log("num_followers: ", num_followers);
