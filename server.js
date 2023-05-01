@@ -325,7 +325,8 @@ app.post('/addFollower/:user', async (req,res) => {
     session_user = session_user[0];
     console.log("session_user:", session_user);
     console.log("session_user is ", session_user.username);
-    const num_followers = await db.collection(USERS).find({username : user}).toArray()[0].followers.length;
+    let num_followers = await db.collection(USERS).find({username : user}).toArray();
+    num_followers = num_followers[0].followers.length;
     console.log("num_followers: ", num_followers);
     const update = await db.collection(USERS).updateOne({username : user}, {$push: {followers: session_user}});
     console.log("update: ", update);
