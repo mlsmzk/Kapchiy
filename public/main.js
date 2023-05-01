@@ -36,7 +36,7 @@ $("#login-ajax").click(loginAjax);
 console.log('main.js loaded');
 
 $(".followBtn").on('click', function (event) {
-
+    let user = $(".followBtn").attr('name');
     addFollower(user);
   });
 
