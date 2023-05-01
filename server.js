@@ -152,7 +152,7 @@ app.get('/logout',(req,res) => {
     req.session.userId = null;
     req.flash('info',
                   "You have been successfully logged out.");
-    return res.redirect('login.ejs');
+    return res.redirect('/login');
 });
 
 app.post('/register', async (req,res) => {
