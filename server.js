@@ -344,15 +344,15 @@ app.post('/addFollower/:user', async (req,res) => {
     return res.json({error : "you are already following this person!", followers : (num_followers === 0) ? 0 : num_followers});
 });
 
-app.post('/editBio/:user', async (req,res) => {
+app.post('/editBio', async (req,res) => {
     let bio = req.body.bio;
     console.log("bio is", bio);
     let user = req.params.user;
     console.log("user is ", user);
     const db = await Connection.open(mongoUri, kdb);
-    let update = db.collection(USERS).updateOne({username : user}, {$set: {bio: bio}});
+    let update = await db.collection(USERS).updateOne({username : user}, {$set: {bio: bio}});
     console.log("update: ", update);
-    return res.json({error : "you are already following this person!", bio : bio});
+    return res.json({error : false, bio : bio});
 });
 
 // $('textarea').keyup(function() {

@@ -69,7 +69,7 @@ function processFollow(resp) {
 
 $(".editBioBtn").on('click', function (event){
     let user = $(".editBioBtn").attr('name');
-    $.post("/editBio/" + user, {user: user}).then(processEditBio);
+    $.post("/editBio", {user: user}).then(processEditBio);
 });
 
 function processEditBio(resp) {
