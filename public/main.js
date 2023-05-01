@@ -69,7 +69,9 @@ function processFollow(resp) {
 
 $(".editBioBtn").on('click', function (event){
     let user = $(".editBioBtn").attr('name');
-    $.post("/editBio/" + user, {user: user}).then(processEditBio);
+    let bio = $("textarea[id*=bio]").val();
+    console.log("bio is ", bio);
+    $.post("/editBio/" + user, {user: user, bio : bio}).then(processEditBio);
 });
 
 function processEditBio(resp) {
