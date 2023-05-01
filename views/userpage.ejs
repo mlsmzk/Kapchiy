@@ -26,7 +26,7 @@
     <% }; %>
 
     <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
-    <%if (user === username)%>
+    <%if (user === username) {%>
     <!--upon hitting submit button, do an app.post in server.js-->
     <form method="POST" action="/userpage/:userId/editBio">
     <p><label>Edit Bio:
@@ -38,7 +38,7 @@
       </div>
     <p><button type="submit">Save Bio</button></p>
    </form>
-
+   <% } %>
     <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
     <!--User posts-->
     <h2><%= userPosts %></h2>
