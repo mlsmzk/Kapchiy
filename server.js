@@ -330,7 +330,7 @@ app.post('/addFollower/:user', async (req,res) => {
     console.log("num_followers: ", num_followers);
     let already_following = db.collection(USERS).count(
         {username : user,
-         followers: { $in: session_user.username}
+         followers: { $in: [session_user.username]}
         });
     if (already_following !== 1) {
         const update = await db.collection(USERS).updateOne({username : user}, {$push: {followers: session_user.username}});
