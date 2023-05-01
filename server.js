@@ -343,6 +343,17 @@ app.post('/addFollower/:user', async (req,res) => {
     return res.json({error : "you are already following this person!", followers : (num_followers === 0) ? 0 : num_followers});
 });
 
+app.post('/editBio/:user', async (req,res) => {
+    let bio = req.body.bio;
+    console.log("bio is", bio);
+    let user = req.params.user;
+    console.log("user is ", user);
+    const db = await Connection.open(mongoUri, kdb);
+    let update = db.collection(USERS).updateOne({username : user}, {$set: {bio: bio}});
+    console.log("update: ", update);
+    return res.json({error : "you are already following this person!", bio : bio});
+});
+
 // $('textarea').keyup(function() {
     
 //     let characterCount = $(this).val().length,
@@ -354,17 +365,17 @@ app.post('/addFollower/:user', async (req,res) => {
 //     current.text(characterCount);
 // });
 
-app.post('/userpage/:userId/editBio', async (req,res) =>{
-    let newBio = req.body.bio;
-    console.log(newBio);
-    let user = req.params.userId;
-    const db = await Connection.open(mongoUri, kdb);
-    console.log(db.collection(USERS).find({username:user}).toArray());
-    const update = await db.collection(USERS).updateOne({username:user}, {$set:{bio:newBio}});
-    console.log(db.collection(USERS).find({username:user}).toArray());
-    return res.render("/userpage/");
+// app.post('/userpage/:userId/editBio', async (req,res) =>{
+//     let newBio = req.body.bio;
+//     console.log(newBio);
+//     let user = req.params.userId;
+//     const db = await Connection.open(mongoUri, kdb);
+//     console.log(await db.collection(USERS).find({username:user}).toArray());
+//     const update = await db.collection(USERS).updateOne({username:user}, {$set:{bio:newBio}});
+//     console.log(await db.collection(USERS).find({username:user}).toArray());
+//     return res.render("/userpage/");
     
-})
+// })
     
 
 

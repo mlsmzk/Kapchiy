@@ -13,10 +13,10 @@
     <%- include("partials/navbar_logged_in.ejs") %>
 
     <!--Header of the page of the user: name, bio, following-->
-    <h1><%=user %>'s Page</h1>
-    <h2><%=userBio%> this is my bio</h2>
-    <h2 id="followers">Followers: <%=user.followers%></h2>
-    <h2 id="following">Following: <%=user.following%></h2>
+    <h1><%=user %></h1>
+    <h2 id="bio"><%=userBio%></h2>
+    <h2 id="followers">Followers: <%=user.followers.length%></h2>
+    <h2 id="following">Following: <%=user.following.length%></h2>
     <% if (user !== username) { %>
         <form action="/addFollower/<%= user %>" method="POST">
             <button class="followBtn" type="button" name="<%= user %>">
@@ -26,7 +26,7 @@
     <% }; %>
 
     <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
-    <%if (user === username) {%>
+    <% if (user === username) { %>
     <!--upon hitting submit button, do an app.post in server.js-->
     <form method="POST" action="/userpage/:userId/editBio">
     <p><label>Edit Bio:
@@ -36,9 +36,9 @@
         <span id="current">0</span>
         <span id="maximum">/ 200</span>
       </div>
-    <p><button type="submit">Save Bio</button></p>
+    <p><button type="submit" class="editBioBtn">Save Bio</button></p>
    </form>
-   <% } %>
+   <% }; %>
     <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
     <!--User posts-->
     <h2><%= userPosts %></h2>

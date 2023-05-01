@@ -35,10 +35,7 @@ $("#login-ajax").click(loginAjax);
 
 console.log('main.js loaded');
 
-$(".followBtn").on('click', function (event) {
-    let user = $(".followBtn").attr('name');
-    addFollower(user);
-  });
+
 
 
 // a simple response handler you can use in raw debugging or demos
@@ -49,7 +46,19 @@ function showResponse(resp) {
 
 // The response handler that the app uses in practice.
 
-function processAction(resp) {
+
+
+$(".followBtn").on('click', function (event) {
+    let user = $(".followBtn").attr('name');
+    addFollower(user);
+  });
+
+function addFollower(user) {
+    // $.ajax("/likeAjax/"+tt, {method: 'POST', data: {tt: tt}, success: processAction});
+    $.post("/addFollower/"+user, {user: user}).then(processFollow);
+}
+
+function processFollow(resp) {
     console.log('response is ',resp);
     if (resp.error) {
         alert('Error: '+resp.error);
@@ -58,11 +67,16 @@ function processAction(resp) {
     $('#followers').text("Followers: " + resp.followers);
 }
 
-// functions to like/dislike movie with ajax
+$(".editBioBtn").on('click', function (event){
+    let user = $(".editBioBtn").attr('name');
+    $.post("/editBio/" + user, {user: user}).then(processEditBio);
+});
 
-function addFollower(user) {
-    // $.ajax("/likeAjax/"+tt, {method: 'POST', data: {tt: tt}, success: processAction});
-    $.post("/addFollower/"+user, {user: user}).then(processAction);
+function processEditBio(resp) {
+    console.log('response is ',resp);
+    if (resp.error) {
+        alert('Error: '+resp.error);
+    }
+    console.log("this worked");
+    $('#bio').text(resp.bio);
 }
-
-
