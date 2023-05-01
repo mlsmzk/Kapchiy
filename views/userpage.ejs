@@ -53,6 +53,7 @@
     <h2><%= userPosts %></h2>
     <div id="userPosts">
         <% userPosts.forEach((post) => {%>
+        <div class="post">
         <h2><%= post.title %></h2>
         <figure>
             <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
@@ -69,6 +70,7 @@
         <p>No tags attached to this post</p>
         <% }; %>
         <% }); %>
+        </div>
     </div>
     </div>
 

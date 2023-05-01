@@ -53,3 +53,10 @@ h1 {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+
+.post {
+    background-color: white;
+    border-color: black;
+    border-style: solid;
+    border-width: 3px;
+}
