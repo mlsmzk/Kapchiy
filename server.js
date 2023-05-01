@@ -328,9 +328,16 @@ app.post('/addFollower/:user', async (req,res) => {
     let num_followers = await db.collection(USERS).find({username : user}).toArray();
     num_followers = num_followers[0].followers.length;
     console.log("num_followers: ", num_followers);
-    const update = await db.collection(USERS).updateOne({username : user}, {$push: {followers: session_user}});
-    console.log("update: ", update);
-    return res.json({error: false, followers: num_followers + 1});
+    let already_following = db.collection(USERS).count(
+        {username : user,
+         followers: { $in: session_user.username}
+        });
+    if (already_following !== 1) {
+        const update = await db.collection(USERS).updateOne({username : user}, {$push: {followers: session_user.username}});
+        console.log("update: ", update);
+        return res.json({error: false, followers: num_followers + 1});
+    }
+    return res.json({error : "you are already following this person!", followers : (num_followers === 0) ? 0 : num_followers});
 });
 
 // $('textarea').keyup(function() {
