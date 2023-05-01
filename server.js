@@ -146,6 +146,15 @@ app.get('/login',(req,res) => {
     return res.render('login.ejs');
 });
 
+app.get('/logout',(req,res) => {
+    console.log("req.session: ", req.session);
+    req.session.username = null;
+    req.session.userId = null;
+    req.flash('info',
+                  "You have been successfully logged out.");
+    return res.redirect('login.ejs');
+});
+
 app.post('/register', async (req,res) => {
     const username = req.body.username;
     const db = await Connection.open(mongoUri, kdb);
