@@ -9,14 +9,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+    <h1>Kapchiy</h1>
     <!--partial for navbar-->
     <%- include("partials/navbar_logged_in.ejs") %>
 
     <!--Header of the page of the user: name, bio, following-->
-    <h1><%=user %></h1>
-    <h2 id="bio"><%=userBio%></h2>
-    <h2 id="followers">Followers: <%=followers.length%></h2>
-    <h2 id="following">Following: <%=following.length%></h2>
+    <h2><%=user %></h2>
+    <h3 id="bio"><%=userBio%></h3>
+    <h3 id="followers">Followers: <%=followers.length%></h3>
+    <h3 id="following">Following: <%=following.length%></h3>
     <% if (user !== username) { %>
         <form action="/addFollower/<%= user %>" method="POST">
             <button class="followBtn" type="button" name="<%= user %>">
