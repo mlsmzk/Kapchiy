@@ -117,6 +117,24 @@ app.get('/', async (req, res) => {
     }
 });
 
+//increments the likes for a post and returns the updated document
+async function likePost(id){  //we don't have a tt
+    const db = await Connection.open(mongoUri, kdb);
+    const allPosts = await db.collection(POSTS)
+                        .updateOne({"postId": parseInt(id)},
+                            {$inc: {likes: 1}},
+                            {upsert: false});
+    doc = await db.collection(POSTS).findOne({"postId":parseInt(id)});
+    return doc;
+}
+
+app.post('/likeClassic/:postId', async (req, res) => {
+    let id = req.query.postid;
+    let doc = await likePost(id);
+    //req.flash('info', `Post now has  ${doc.allPosts.likes} likes`);
+    return res.redirect('/')
+})
+
 /* app.get('/posts' , async (req,res) => {
     const db = await Connection.open(mongoUri, kdb);
     const allPosts = await db.collection(POSTS).find().toArray();
@@ -291,7 +309,8 @@ app.post('/create', upload.single('photo'), async (req, res) => {
                       owner: username,
                       path: '/uploads/'+req.file.filename,
                       caption: req.body.caption,
-                      tags: tagString});
+                      tags: tagString,
+                      likes: 0});
     console.log('insertOne result', result);
     // always nice to confirm with the user
     req.flash('info', 'file uploaded');
@@ -309,6 +328,31 @@ app.post('/addFollower/:user', async (req,res) => {
     console.log("update: ", update);
     return res.json({error: false, followers: num_followers + 1});
 });
+
+// $('textarea').keyup(function() {
+    
+//     let characterCount = $(this).val().length,
+//         current = $('#current'),
+//         maximum = $('#maximum'),
+      
+//         theCount = $('#the-count');
+      
+//     current.text(characterCount);
+// });
+
+app.post('/userpage/:userId/editBio', async (req,res) =>{
+    let newBio = req.body.bio;
+    console.log(newBio);
+    let user = req.params.userId;
+    const db = await Connection.open(mongoUri, kdb);
+    console.log(db.collection(USERS).find({username:user}).toArray());
+    const update = await db.collection(USERS).updateOne({username:user}, {$set:{bio:newBio}});
+    console.log(db.collection(USERS).find({username:user}).toArray());
+    return res.render("/userpage/");
+    
+})
+    
+
 
 // // ================================================================
 // // postlude

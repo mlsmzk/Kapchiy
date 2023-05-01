@@ -14,7 +14,6 @@
     <%- include("partials/form.ejs") %>    <%# Add form partial %>
     <%- include("partials/navbar_logged_in.ejs") %> <%# Add flashes partial %>
     
-
     <% userPosts.forEach((post) => { %>
         <div class="gallery">
             <h2 class="postTitle"><%= post.title %></h2>
@@ -22,6 +21,19 @@
                 <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
                 <figcaption><%= post.caption || 'Untitled' %></figcaption>
             </figure>
+            <form method="post" action="/likeClassic/<%= post.postId %>">
+                <button class="likeBtn" type="submit">
+                  👍 like classic
+                </button>
+                <button class="likeBtn" type="button">
+                  👍 like ajax
+                </button>
+              </form>
+
+            <p class="likeCounter">
+                <%= post.likes ? post.likes : '0' %>
+            </p>
+
             <div class="postTag">Tags:</div>
             <ul>
             <% if (post.tags) { %>

@@ -14,7 +14,7 @@
 
     <!--Header of the page of the user: name, bio, following-->
     <h1><%=user %>'s Page</h1>
-    <h2><%=userBio%></h2>
+    <h2><%=userBio%> this is my bio</h2>
     <h2 id="followers">Followers: <%=user.followers%></h2>
     <h2 id="following">Following: <%=user.following%></h2>
     <% if (user !== username) { %>
@@ -24,6 +24,20 @@
               </button>
         </form>
     <% }; %>
+
+    <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
+    <%if (user === username)%>
+    <!--upon hitting submit button, do an app.post in server.js-->
+    <form method="POST" action="/userpage/:userId/editBio">
+    <p><label>Edit Bio:
+        <textarea placholder= "<%=userBio%>" rows="3" cols="30" name="bio" id="bio" maxlength="200"></textarea>
+    </label></p>
+    <div id="the-count">
+        <span id="current">0</span>
+        <span id="maximum">/ 200</span>
+      </div>
+    <p><button type="submit">Save Bio</button></p>
+   </form>
 
     <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
     <!--User posts-->
