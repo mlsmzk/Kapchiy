@@ -328,7 +328,7 @@ app.post('/addFollower/:user', async (req,res) => {
     let num_followers = await db.collection(USERS).find({username : user}).toArray();
     num_followers = num_followers[0].followers.length;
     console.log("num_followers: ", num_followers);
-    let already_following = db.collection(USERS).count(
+    let already_following = await db.collection(USERS).count(
         {username : user,
          followers: { $in: [session_user.username]}
         });
