@@ -5,5 +5,10 @@ h1 {
 
 .flex-container {
     display: flex;
+    flex-direction: column;
+}
+
+#follow-list {
+    display: flex;
     flex-direction: row;
 }

@@ -16,33 +16,35 @@
     <!--Header of the page of the user: name, bio, following-->
     <div id="user-info">
     <div id="user-profile">
+        <h1><%=user %></h1>
         <div class="flex-container"> <!-- flex container -->
-    <h1><%=user %></h1>
-    <h2 id="bio"><%=userBio%></h2>
-    <h2 id="followers">Followers: <%=followers.length%></h2>
-    <h2 id="following">Following: <%=following.length%></h2>
-    <% if (user !== username) { %>
-        <form action="/addFollower/<%= user %>" method="POST">
-            <button class="followBtn" type="button" name="<%= user %>">
-                Follow <%= user %>
-              </button>
-        </form>
-    <% }; %>
+            <h2 id="bio"><%=userBio%></h2>
+            <ul id="follow-list" style="list-style: none;">
+                <li><h2 id="following">Following: <%=following.length%></h2></li>
+                <li><h2 id="followers">Followers: <%=followers.length%></h2></li>
+            </ul>
+            <% if (user !== username) { %>
+                <form action="/addFollower/<%= user %>" method="POST">
+                    <button class="followBtn" type="button" name="<%= user %>">
+                        Follow <%= user %>
+                    </button>
+                </form>
+            <% }; %>
 
-    <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
-    <% if (user === username) { %>
-    <!--upon hitting submit button, do an app.post in server.js-->
-    <form method="POST" action="/editBio/<%= user %>">
-    <p><label>Edit Bio:
-        <textarea placeholder= "<%=userBio%>" rows="3" cols="30" name="bio" maxlength="200"></textarea>
-    </label></p>
-    <div id="the-count">
-        <span id="current">0</span>
-        <span id="maximum">/ 200</span>
-      </div>
-    <p><button type="button" class="editBioBtn" name="<%= user %>">Save Bio</button></p>
-   </form>
-   <% }; %>
+            <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
+            <% if (user === username) { %>
+            <!--upon hitting submit button, do an app.post in server.js-->
+            <form method="POST" action="/editBio/<%= user %>">
+            <p><label>Edit Bio:
+                <textarea placeholder= "<%=userBio%>" rows="3" cols="30" name="bio" maxlength="200"></textarea>
+            </label></p>
+            <div id="the-count">
+                <span id="current">0</span>
+                <span id="maximum">/ 200</span>
+            </div>
+            <p><button type="button" class="editBioBtn" name="<%= user %>">Save Bio</button></p>
+            </form>
+            <% }; %>
         </div> <!-- flex container -->
     </div>
     <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
