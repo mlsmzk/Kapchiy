@@ -15,8 +15,8 @@
     <!--Header of the page of the user: name, bio, following-->
     <h1><%=user %></h1>
     <h2 id="bio"><%=userBio%></h2>
-    <h2 id="followers">Followers: <%=user.followers.length%></h2>
-    <h2 id="following">Following: <%=user.following.length%></h2>
+    <h2 id="followers">Followers: <%=followers.length%></h2>
+    <h2 id="following">Following: <%=following.length%></h2>
     <% if (user !== username) { %>
         <form action="/addFollower/<%= user %>" method="POST">
             <button class="followBtn" type="button" name="<%= user %>">
