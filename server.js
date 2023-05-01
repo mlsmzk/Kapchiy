@@ -345,6 +345,7 @@ app.post('/addFollower/:user', async (req,res) => {
 });
 
 app.post('/editBio/:user', async (req,res) => {
+    console.log("req.body", req.body);
     let bio = req.body.bio;
     console.log("bio is", bio);
     let user = req.params.user;
