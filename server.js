@@ -364,16 +364,16 @@ app.post('/like/:postId', async (req, res) => {
     console.log("req.body.user is", user);
 
     const db = await Connection.open(mongoUri, kdb);
-    let doc = await db.collection(POSTS).find({"postId":id}).toArray();
+    let doc = await db.collection(POSTS).find({"postId":postId}).toArray();
     console.log("doc", doc);
     let already_liked = await db.collection(POSTS).count(
-        {postId : id,
+        {postId : postId,
          followers: { $in: [user]}
         });
     console.log("already liked is: ", already_liked);
     if (already_liked !== 1) {
         const updateLike = await db.collection(POSTS)
-                            .updateOne({"postId": id},
+                            .updateOne({"postId": postId},
                                 {$push: {likes: user}},
                                 {upsert: false});
         console.log("update status: ", updateLike);
