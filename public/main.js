@@ -46,9 +46,9 @@ function showResponse(resp) {
 
 // The response handler that the app uses in practice.
 
-$(".likeBtn").on('click', function(event) {
-    let postId = $(".likeBtn").attr("data-id");
-    let user = $(".likeBtn").attr("data-liker");
+$(".gallery").on('click', 'button[class=likeBtn]', function(event) {
+    let postId = $(event.target).closest('button').attr("data-id");
+    let user = $(event.target).closest('button').attr("data-liker");
     addLike(postId, user);
 });
 
