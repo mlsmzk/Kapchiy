@@ -1,30 +1,20 @@
 body{
   background-color: #93BFCF;
-  
+  margin: 0;
 }
 
 .main{
-  margin-left: 350px; /* Same as the width of the sidebar */
-}
-
-p {
-  font-family: Verdana;
-  
-}
-
-.main h1 {
-  color: #EEE9DA;
-  text-align: center;
-  font-size: 48px;
+  margin-left: 300px; /* Same as the width of the sidebar */
 }
 
 h1 {
   color: #EEE9DA;
   text-align: center;
+  font-size: 48px;
 }
 
 /* search form */
-div.searchForm
+.searchForm
 {
   display: block;
   text-align: center;
@@ -35,7 +25,25 @@ div.searchForm
   cursor: pointer;
 }
 
-/* The sidebar menu */
+.searchForm #textbox{
+  margin-top: 100px;
+  width: 600px;
+  height: 20px;
+  border: 5px solid white;
+  border-radius: 5px;
+}
+
+.searchForm #submit{
+  height: 32px;
+  width: 75px;
+  background-color: #BDCDD6;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  color: white;
+}
+
+/* The sidebar navbar */
 #navbar {
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 160px; /* Set the width of the sidebar */
@@ -65,7 +73,7 @@ div.searchForm
 #navbar a:hover {
   color: #88969e;
 }
-
+/* Logout Button*/
 #navbar .logout button{
   background-color: #BDCDD6;
   border: none;
@@ -74,6 +82,13 @@ div.searchForm
   border-radius: 16px;
 }
 
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  #navbar {padding-top: 15px;}
+  #navbar a {font-size: 18px;}
+}
+
+/* Homepage Post Gallery */
 div.gallery {
   margin: 5px;
   margin-top: 50px;
@@ -96,6 +111,10 @@ div.gallery img {
   height: auto;
 }
 
+div.gallery h2{
+  text-align: center;
+}
+
 div.desc {
   padding: 15px;
   text-align: center;
@@ -103,6 +122,7 @@ div.desc {
   background-color: #dddddd;
 }
 
+/* Login Form*/
 .form {
   position: relative;
   z-index: 1;
@@ -140,5 +160,105 @@ div.desc {
 }
 .form button:hover,.form button:active,.form button:focus {
   background: #93BFCF;
+}
+
+.form h1{
+  color: #255067;
+  font-size: 30px;
+}
+/* Upload Form*/
+
+.uploadForm{
+  background: #FFFFFF;
+  max-width: 800px;
+  margin: 0 auto 100px;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.uploadForm p{
+  color: #255067 ;
+  font-size: 20px;
+}
+.uploadForm input{
+  width: 100%;
+  padding: 15px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ffffff;
+  background-color: #efede7;
+  border-radius: 10px;;
+  outline: none;
+}
+
+
+/* User Info*/
+#user-info h2 {
+  color: #255067;
+  font-size: 25px;
+}
+#user-info h3,label{
+  color: #255067;
+  font-size: 15px;
+}
+
+/* Style page content
+#user-info {
+  margin-left: 160px;
+  margin-right: 160px;
+  padding: 0px 10px;
+} */
+
+/* User Profile: Bio, Following, NumOfPosts*/
+#user-profile{
+  max-width: 600px;
+  margin: 0 auto 100px;
+}
+
+#user-profile .flex-container textarea {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ffffff;
+  border-radius: 5px;;
+  outline: none;
+}
+
+#user-profile .flex-container button{
+  background-color: #BDCDD6;
+  border: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+/* User Post Styling*/
+#userPosts{
+  max-width: 600px;
+  margin: 0 auto 100px;
+}
+
+#userPosts .post {
+  border: 5px solid #ffffff;
+  border-radius: 5px;
+  font-size: small;
+  background-color: #ffffff;
+}
+
+#userPosts .post h2{
+  text-align: left;
+}
+
+#userPosts .post figure{
+  text-align: center;
+}
+
+#userPosts .post h3{
+  padding-left: 40px;
+}
+
+#userPosts .post ul{
+  padding-left: 55px;
 }
 

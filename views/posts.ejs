@@ -17,23 +17,23 @@
 
         <% userPosts.forEach((post) => { %>
         
-    <div>
-        <h3><%= post.title %></h3>
-        <figure>
-            <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
-            <figcaption><%= post.caption || 'Untitled' %></figcaption>
-        </figure>
-        <h3>Tags:</h3>
-        <ul>
-        <% if (post.tags) { %>
-            <% post.tags.split(',').forEach((tag) => { %>
-            <li><%= tag %></li>
-            <% }); %>
-        </ul>
-        <% } else { %>
-        <p>"No tags attached to this post"</p>
-        <% }; %>
-    </div>
+        <div class="flex-container">
+            <h3><%= post.title %></h3>
+            <figure>
+                <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
+                <figcaption><%= post.caption || 'Untitled' %></figcaption>
+            </figure>
+            <h3>Tags:</h3>
+            <ul>
+            <% if (post.tags) { %>
+                <% post.tags.split(',').forEach((tag) => { %>
+                <li><%= tag %></li>
+                <% }); %>
+            </ul>
+            <% } else { %>
+            <p>"No tags attached to this post"</p>
+            <% }; %>
+        </div>
         <% }); %>
 
     </div>
