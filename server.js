@@ -27,6 +27,8 @@ const { userAgentMiddleware } = require('@aws-sdk/middleware-user-agent');
 // Create and configure the app
 
 const app = express();
+const { createHash } = require('crypto'); // For use in function for hashing postId
+
 
 // Morgan reports the final status code of a request's response
 app.use(morgan('tiny'));
@@ -55,6 +57,10 @@ app.use(cookieSession({
 
 
 // app.use('/uploads', express.static('uploads'));
+
+function hash(string) {
+    return createHash('sha256').update(string).digest('hex');
+  }
 
 /* Functions for file uploading and security */
 function timeString(dateObj) {
@@ -117,23 +123,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-//increments the likes for a post and returns the updated document
-async function likePost(id){  //we don't have a tt
-    const db = await Connection.open(mongoUri, kdb);
-    const allPosts = await db.collection(POSTS)
-                        .updateOne({"postId": parseInt(id)},
-                            {$inc: {likes: 1}},
-                            {upsert: false});
-    doc = await db.collection(POSTS).findOne({"postId":parseInt(id)});
-    return doc;
-}
 
-app.post('/likeClassic/:postId', async (req, res) => {
-    let id = req.query.postid;
-    let doc = await likePost(id);
-    //req.flash('info', `Post now has  ${doc.allPosts.likes} likes`);
-    return res.redirect('/')
-})
 
 /* app.get('/posts' , async (req,res) => {
     const db = await Connection.open(mongoUri, kdb);
@@ -319,7 +309,8 @@ app.post('/create', upload.single('photo'), async (req, res) => {
                       path: '/uploads/'+req.file.filename,
                       caption: req.body.caption,
                       tags: tagString,
-                      likes: 0});
+                      likes: [],
+                      postId: hash(req.file.filename)});
     console.log('insertOne result', result);
     // always nice to confirm with the user
     req.flash('info', 'file uploaded');
@@ -363,6 +354,36 @@ app.post('/editBio/:user', async (req,res) => {
     console.log("update: ", update);
     return res.json({error : false, bio : bio});
 });
+
+//increments the likes for a post and returns the updated document
+app.post('/like/:postId', async (req, res) => {
+    console.log(req.body);
+    let postId = req.body.postId;
+    console.log("req.body.postId is", postId);
+    let user = req.body.user;
+    console.log("req.body.user is", user);
+
+    const db = await Connection.open(mongoUri, kdb);
+    let doc = await db.collection(POSTS).find({"postId":postId}).toArray();
+    console.log("doc", doc);
+    let already_liked = await db.collection(POSTS).count(
+        {postId : postId,
+         likes: { $in: [user]}
+        });
+    console.log("already liked is: ", already_liked);
+    if (already_liked !== 1) {
+        const updateLike = await db.collection(POSTS)
+                            .updateOne({"postId": postId},
+                                {$push: {likes: user}},
+                                {upsert: false});
+        console.log("update status: ", updateLike);
+        return res.json({error : false, likes : doc[0].likes.length + 1});
+    } else {
+    console.log("already liked is 1");
+    return res.json({error : "you have already liked this post!", likes : doc[0].likes.length});
+    //req.flash('info', `Post now has  ${doc.allPosts.likes} likes`);
+    }
+})
 
 // $('textarea').keyup(function() {
     

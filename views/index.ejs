@@ -21,19 +21,17 @@
                 <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
                 <figcaption><%= post.caption || 'Untitled' %></figcaption>
             </figure>
-            <form method="post" action="/likeClassic/<%= post.postId %>">
-                <button class="likeBtn" type="submit">
-                  👍 like classic
-                </button>
-                <button class="likeBtn" type="button">
-                  👍 like ajax
-                </button>
-              </form>
+            <div class="like-container">
+                <form method="POST" action="/like/<%= post.postId %>">
+                    <button data-liker="<%= username%>" data-id="<%=post.postId%>" class="likeBtn" type="button" name="likeBtn">
+                    👍 like
+                    </button>
+                </form>
 
-            <p class="likeCounter">
-                <%= post.likes ? post.likes : '0' %>
-            </p>
-
+                <p class="likeCounter">
+                    Likes: <% (post.likes.length > 0) ? post.likes.length : '0' %>
+                </p>
+            </div>
             <div class="postTag">Tags:</div>
             <ul>
             <% if (post.tags) { %>

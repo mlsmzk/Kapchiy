@@ -46,7 +46,20 @@ function showResponse(resp) {
 
 // The response handler that the app uses in practice.
 
-
+$(".gallery").on('click', 'button[class=likeBtn]', function(event) {
+    let postId = $(event.target).closest('button').attr("data-id");
+    let user = $(event.target).closest('button').attr("data-liker");
+    $.post("/like/" + postId, {postId, user})
+        .then(function (resp) {
+            console.log('response is ',resp);
+            if (resp.error) {
+                alert('Error: '+resp.error);
+            }
+            console.log("liking worked");
+            $(event.target).closest("div[class='like-container']").find("p[class='likeCounter']").text("Likes: " + resp.likes);
+            console.log("updated like counter");
+        });
+});
 
 $(".followBtn").on('click', function (event) {
     let user = $(".followBtn").attr('name');
