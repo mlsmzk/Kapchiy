@@ -50,7 +50,7 @@ $(".gallery").on('click', 'button[class=likeBtn]', function(event) {
     let postId = $(event.target).closest('button').attr("data-id");
     let user = $(event.target).closest('button').attr("data-liker");
     $.post("/like/" + postId, {postId, user})
-        .then(function () {
+        .then(function (resp) {
             console.log('response is ',resp);
             if (resp.error) {
                 alert('Error: '+resp.error);
