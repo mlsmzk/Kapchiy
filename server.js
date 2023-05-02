@@ -368,7 +368,7 @@ app.post('/like/:postId', async (req, res) => {
     console.log("doc", doc);
     let already_liked = await db.collection(POSTS).count(
         {postId : postId,
-         followers: { $in: [user]}
+         likes: { $in: [user]}
         });
     console.log("already liked is: ", already_liked);
     if (already_liked !== 1) {

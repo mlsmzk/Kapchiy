@@ -49,20 +49,20 @@ function showResponse(resp) {
 $(".gallery").on('click', 'button[class=likeBtn]', function(event) {
     let postId = $(event.target).closest('button').attr("data-id");
     let user = $(event.target).closest('button').attr("data-liker");
-    addLike(postId, user);
+    addLike(postId, user, event);
 });
 
-function addLike(postId, user) {
-    $.post("/like/" + postId, {postId, user}).then(processLike);
+function addLike(postId, user, event) {
+    $.post("/like/" + postId, {postId, user}).then(processLike(event));
 }
 
-function processLike(resp) {
+function processLike(resp, event) {
     console.log('response is ',resp);
     if (resp.error) {
         alert('Error: '+resp.error);
     }
     console.log("liking worked");
-    $('.likeCounter').text("Likes: " + resp.likes);
+    $(event.target).closest('.likeCounter').text("Likes: " + resp.likes);
 }
 
 
