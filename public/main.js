@@ -49,14 +49,16 @@ function showResponse(resp) {
 $(".gallery").on('click', 'button[class=likeBtn]', function(event) {
     let postId = $(event.target).closest('button').attr("data-id");
     let user = $(event.target).closest('button').attr("data-liker");
-    $.post("/like/" + postId, {postId, user}).then(processLike);
-    console.log('response is ',resp);
-    if (resp.error) {
-        alert('Error: '+resp.error);
-    }
-    console.log("liking worked");
-    $(event.target).closest('.likeCounter').text("Likes: " + resp.likes);
-    console.log("updated like counter");
+    $.post("/like/" + postId, {postId, user})
+        .then(function () {
+            console.log('response is ',resp);
+            if (resp.error) {
+                alert('Error: '+resp.error);
+            }
+            console.log("liking worked");
+            $(event.target).closest('.likeCounter').text("Likes: " + resp.likes);
+            console.log("updated like counter");
+        });
 });
 
 $(".followBtn").on('click', function (event) {
