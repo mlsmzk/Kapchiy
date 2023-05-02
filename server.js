@@ -118,21 +118,36 @@ app.get('/', async (req, res) => {
 });
 
 //increments the likes for a post and returns the updated document
-async function likePost(id){  //we don't have a tt
+async function likePost(id, user){  //we don't have a tt
     const db = await Connection.open(mongoUri, kdb);
+    let already_liked = await db.collection(USERS).count(
+        {_id : parseInt(id),
+         followers: { $in: [user]}
+        });
+    console.log("already liked is: ", already_liked);
+    if (already_following !== 1) {
     const allPosts = await db.collection(POSTS)
-                        .updateOne({"postId": parseInt(id)},
-                            {$inc: {likes: 1}},
+                        .updateOne({"_id": parseInt(id)},
+                            {$push: {likes: user.username}},
                             {upsert: false});
-    doc = await db.collection(POSTS).findOne({"postId":parseInt(id)});
-    return doc;
+    doc = await db.collection(POSTS).findOne({"_id":parseInt(id)});
+    console.log("doc", doc);
+    return doc.likes.length;
+    }
+    console.log("already following is 0");
+    return 0;
+    
 }
 
-app.post('/likeClassic/:postId', async (req, res) => {
-    let id = req.query.postid;
-    let doc = await likePost(id);
+app.post('/like/:postId', async (req, res) => {
+    console.log(req.body);
+    let postId = req.body.postId;
+    console.log("req.body.postId is", postId);
+    let user = req.body.user;
+    console.log("req.body.user is", user);
+    let doc = await likePost(postId, user);
     //req.flash('info', `Post now has  ${doc.allPosts.likes} likes`);
-    return res.redirect('/')
+    return res.json({error : "you have already liked this post!", likes : doc});
 })
 
 /* app.get('/posts' , async (req,res) => {
@@ -319,7 +334,7 @@ app.post('/create', upload.single('photo'), async (req, res) => {
                       path: '/uploads/'+req.file.filename,
                       caption: req.body.caption,
                       tags: tagString,
-                      likes: 0});
+                      likes: []});
     console.log('insertOne result', result);
     // always nice to confirm with the user
     req.flash('info', 'file uploaded');

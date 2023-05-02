@@ -46,6 +46,24 @@ function showResponse(resp) {
 
 // The response handler that the app uses in practice.
 
+$(".likeBtn").on('click', function(event) {
+    let postId = $(".likeBtn").attr("data-id");
+    let user = $(".likeBtn").attr("data-liker");
+    addLike(postId, user);
+});
+
+function addLike(postId, user) {
+    $.post("/like/" + postId, {postId, user}).then(processLike);
+}
+
+function processLike(resp) {
+    console.log('response is ',resp);
+    if (resp.error) {
+        alert('Error: '+resp.error);
+    }
+    console.log("liking worked");
+    $('.likeCounter').text("Likes: " + resp.likes);
+}
 
 
 $(".followBtn").on('click', function (event) {
