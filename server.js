@@ -123,39 +123,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-//increments the likes for a post and returns the updated document
-async function likePost(id, user){  //we don't have a tt
-    const db = await Connection.open(mongoUri, kdb);
-    let already_liked = await db.collection(POSTS).count(
-        {postId : id,
-         followers: { $in: [user]}
-        });
-    console.log("already liked is: ", already_liked);
-    if (already_liked !== 1) {
-    const updateLike = await db.collection(POSTS)
-                        .updateOne({"postId": id},
-                            {$push: {likes: user.username}},
-                            {upsert: false});
-    console.log("update status: ", updateLike);
-    doc = await db.collection(POSTS).find({"postId":id}).toArray();
-    console.log("doc", doc);
-    return doc[0].likes.length;
-    }
-    console.log("already liked is 0");
-    return 0;
-    
-}
 
-app.post('/like/:postId', async (req, res) => {
-    console.log(req.body);
-    let postId = req.body.postId;
-    console.log("req.body.postId is", postId);
-    let user = req.body.user;
-    console.log("req.body.user is", user);
-    let doc = await likePost(postId, user);
-    //req.flash('info', `Post now has  ${doc.allPosts.likes} likes`);
-    return res.json({error : "you have already liked this post!", likes : doc});
-})
 
 /* app.get('/posts' , async (req,res) => {
     const db = await Connection.open(mongoUri, kdb);
@@ -386,6 +354,36 @@ app.post('/editBio/:user', async (req,res) => {
     console.log("update: ", update);
     return res.json({error : false, bio : bio});
 });
+
+//increments the likes for a post and returns the updated document
+app.post('/like/:postId', async (req, res) => {
+    console.log(req.body);
+    let postId = req.body.postId;
+    console.log("req.body.postId is", postId);
+    let user = req.body.user;
+    console.log("req.body.user is", user);
+
+    const db = await Connection.open(mongoUri, kdb);
+    let doc = await db.collection(POSTS).find({"postId":id}).toArray();
+    console.log("doc", doc);
+    let already_liked = await db.collection(POSTS).count(
+        {postId : id,
+         followers: { $in: [user]}
+        });
+    console.log("already liked is: ", already_liked);
+    if (already_liked !== 1) {
+        const updateLike = await db.collection(POSTS)
+                            .updateOne({"postId": id},
+                                {$push: {likes: user}},
+                                {upsert: false});
+        console.log("update status: ", updateLike);
+        return res.json({error : false, likes : doc[0].likes.length + 1});
+    } else {
+    console.log("already liked is 1");
+    return res.json({error : "you have already liked this post!", likes : doc[0].likes.length});
+    //req.flash('info', `Post now has  ${doc.allPosts.likes} likes`);
+    
+})
 
 // $('textarea').keyup(function() {
     
