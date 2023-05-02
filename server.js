@@ -27,6 +27,8 @@ const { userAgentMiddleware } = require('@aws-sdk/middleware-user-agent');
 // Create and configure the app
 
 const app = express();
+const { createHash } = require('crypto'); // For use in function for hashing postId
+
 
 // Morgan reports the final status code of a request's response
 app.use(morgan('tiny'));
@@ -55,6 +57,10 @@ app.use(cookieSession({
 
 
 // app.use('/uploads', express.static('uploads'));
+
+function hash(string) {
+    return createHash('sha256').update(string).digest('hex');
+  }
 
 /* Functions for file uploading and security */
 function timeString(dateObj) {
@@ -121,17 +127,17 @@ app.get('/', async (req, res) => {
 async function likePost(id, user){  //we don't have a tt
     const db = await Connection.open(mongoUri, kdb);
     let already_liked = await db.collection(POSTS).count(
-        {_id : id,
+        {postId : id,
          followers: { $in: [user]}
         });
     console.log("already liked is: ", already_liked);
     if (already_liked !== 1) {
     const updateLike = await db.collection(POSTS)
-                        .updateOne({"_id": id},
+                        .updateOne({"postId": id},
                             {$push: {likes: user.username}},
                             {upsert: false});
     console.log("update status: ", updateLike);
-    doc = await db.collection(POSTS).find({"_id":id}).toArray();
+    doc = await db.collection(POSTS).find({"postId":id}).toArray();
     console.log("doc", doc);
     return doc[0].likes.length;
     }
@@ -335,7 +341,8 @@ app.post('/create', upload.single('photo'), async (req, res) => {
                       path: '/uploads/'+req.file.filename,
                       caption: req.body.caption,
                       tags: tagString,
-                      likes: []});
+                      likes: [],
+                      postId: hash(req.file.filename)});
     console.log('insertOne result', result);
     // always nice to confirm with the user
     req.flash('info', 'file uploaded');
