@@ -131,7 +131,7 @@ async function likePost(id, user){  //we don't have a tt
                             {$push: {likes: user.username}},
                             {upsert: false});
     console.log("update status: ", updateLike);
-    doc = await db.collection(POSTS).findOne({"_id":id}).toArray();
+    doc = await db.collection(POSTS).find({"_id":id}).toArray();
     console.log("doc", doc);
     return doc[0].likes.length;
     }
