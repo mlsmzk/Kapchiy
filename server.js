@@ -382,7 +382,7 @@ app.post('/like/:postId', async (req, res) => {
     console.log("already liked is 1");
     return res.json({error : "you have already liked this post!", likes : doc[0].likes.length});
     //req.flash('info', `Post now has  ${doc.allPosts.likes} likes`);
-    
+    }
 })
 
 // $('textarea').keyup(function() {
