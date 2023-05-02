@@ -56,7 +56,7 @@ $(".gallery").on('click', 'button[class=likeBtn]', function(event) {
                 alert('Error: '+resp.error);
             }
             console.log("liking worked");
-            $(event.target).closest("p[class='likeCounter']").text("Likes: " + resp.likes);
+            $(event.target).closest("div[class='like-container']").find("p[class='likeCounter']").text("Likes: " + resp.likes);
             console.log("updated like counter");
         });
 });
