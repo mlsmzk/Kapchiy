@@ -2,20 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>People App</title>
+    <title>Kapchiy</title>
     <!-- load local stylesheet (css) -->
     <link rel="stylesheet" href="/styles.css" />
     <!-- loading jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <%- include("partials/navbar_logged_in.ejs") %>
+    <div class="main">
+        <%- include("partials/navbar_logged_in.ejs") %>
 
-    <h1>Here's what post comes up:</h1>
-
-    <ol>
-        <li><%= post.caption  %></li>
-    </ol>
+        <h1>Here's what post comes up:</h1>
+    
+        <ol>
+            <li><%= post.caption  %></li>
+        </ol>
+    </div>
+    
     <!-- load local js -->
     <script src="/main.js"></script>
 </body>
