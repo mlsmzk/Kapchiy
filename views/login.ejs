@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>People App</title>
+    <title>Kapchiy</title>
     <!-- load local stylesheet (css) -->
     <link rel="stylesheet" href="/styles.css" />
     <!-- loading jquery -->
@@ -11,33 +11,33 @@
 
 <%- include("partials/flashes.ejs") %> <%# Add flashes partial %>
 
-<body style="background-color: #93BFCF;">
-    <h1>Kapchiy</h1>
+<body>
+        <h1>Kapchiy</h1>
+
+        <div class="form"> 
+            <h1 id="login-header">Login</h1>
     
-    <div class="form"> 
-        <h1 id="login-header">Login</h1>
-
-        <form action="/login" method="POST" id="login-form">
-            <label> Username
-                <input type="text" name="username" placeholder="og102">
-            </label>
-            <label> Password
-                <input type="text" name="password" placeholder="********">
-            </label>
-        <button type="submit">login</button>
-        </form>
-    </div>
-
-    <div class="form">
-        <h1 id="register-form">Register</h1>
-        <form action="/register" method="POST" id="register-form">
-            <label> Username
-                <input type="text" name="username" placeholder="username123">
-            </label>
-            <label> Password
-                <input type="text" name="password" placeholder="*******">
-            </label>
-        <button type="submit">register</button>
-        </form>
-    </div>
+            <form action="/login" method="POST" id="login-form">
+                <label> Username
+                    <input type="text" name="username" placeholder="og102">
+                </label>
+                <label> Password
+                    <input type="text" name="password" placeholder="********">
+                </label>
+            <button type="submit">login</button>
+            </form>
+        </div>
+    
+        <div class="form">
+            <h1 id="register-form">Register</h1>
+            <form action="/register" method="POST" id="register-form">
+                <label> Username
+                    <input type="text" name="username" placeholder="username123">
+                </label>
+                <label> Password
+                    <input type="text" name="password" placeholder="*******">
+                </label>
+            <button type="submit">register</button>
+            </form>
+        </div>
 </body>

@@ -1,53 +1,74 @@
-p {
-  font-family: Verdana;
-}
-
 body{
   background-color: #93BFCF;
+  
 }
+
+.main{
+  margin-left: 350px; /* Same as the width of the sidebar */
+}
+
+p {
+  font-family: Verdana;
+  
+}
+
+.main h1 {
+  color: #EEE9DA;
+  text-align: center;
+  font-size: 48px;
+}
+
 h1 {
   color: #EEE9DA;
   text-align: center;
 }
+
+/* search form */
 div.searchForm
 {
   display: block;
   text-align: center;
   padding: 10px;
   margin: 0px;
-  background: #6096B4;
   font-size: 17px;
   border: none;
   cursor: pointer;
 }
 
-#navbar{
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow: auto;
-  background-color: #6096B4;
-  
-}
-#navbar li a{
-  float: left;
-  width: 16%;
-  color: white;
+/* The sidebar menu */
+#navbar {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
   text-align: center;
-  padding: 12px;
-  text-decoration: none;
-}
-
-#navbar li a:hover {
-  background-color: #88969e;
-}
-
-.log out{
   background-color: #6096B4;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  list-style-type: none;
+  padding-top: 100px;
+  margin: 0;
+  padding-right: 50px;
+}
+
+/* The navigation menu links */
+#navbar a {
+  padding: 30px 20px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #f1f1f1;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+#navbar a:hover {
+  color: #88969e;
+}
+
+#navbar .logout button{
+  background-color: #BDCDD6;
   border: none;
-  color: black;
-  padding: 10px 20px;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 16px;

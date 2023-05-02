@@ -9,14 +9,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <%- include("partials/navbar_logged_in.ejs") %>
+    <div class="main">
+        <h1>Kapchiy</h1>
+        <%- include("partials/navbar_logged_in.ejs") %>
 
-    <h1><%= postDesc %></h1>
+        <h2><%= postDesc %></h1>
 
-    <% userPosts.forEach((post) => { %>
+        <% userPosts.forEach((post) => { %>
         
     <div>
-        <h2><%= post.title %></h2>
+        <h3><%= post.title %></h3>
         <figure>
             <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
             <figcaption><%= post.caption || 'Untitled' %></figcaption>
@@ -33,6 +35,8 @@
         <% }; %>
     </div>
         <% }); %>
+
+    </div>
     <!-- load local js -->
     <script src="/main.js"></script>
 </body>
