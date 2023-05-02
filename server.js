@@ -121,18 +121,19 @@ app.get('/', async (req, res) => {
 async function likePost(id, user){  //we don't have a tt
     const db = await Connection.open(mongoUri, kdb);
     let already_liked = await db.collection(POSTS).count(
-        {_id : parseInt(id),
+        {_id : id,
          followers: { $in: [user]}
         });
     console.log("already liked is: ", already_liked);
     if (already_liked !== 1) {
-    const allPosts = await db.collection(POSTS)
-                        .updateOne({"_id": parseInt(id)},
+    const updateLike = await db.collection(POSTS)
+                        .updateOne({"_id": id},
                             {$push: {likes: user.username}},
                             {upsert: false});
-    doc = await db.collection(POSTS).findOne({"_id":parseInt(id)});
+    console.log("update status: ", updateLike);
+    doc = await db.collection(POSTS).findOne({"_id":id}).toArray();
     console.log("doc", doc);
-    return doc.likes.length;
+    return doc[0].likes.length;
     }
     console.log("already liked is 0");
     return 0;
