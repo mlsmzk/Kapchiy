@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Kapchiy</title>
+    <!-- load local stylesheet (css) -->
+    <link rel="stylesheet" href="/styles.css" />
+    <!-- loading jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <main>
+        <div class="wrapper">
+            <div class="sidebar">
+                <%- include("partials/navbar_logged_in.ejs") %>
+            </div>
+            <div class="main_content">
+                <div id="flashes">
+                    <%- include("partials/flashes.ejs")%>
+                </div>
+            
+                <h1>Users</h1>
+                <%- include("partials/form.ejs") %>
+                <div class="users">
+                    <h2 class="listHeader"><%= listHeader%></h2>
+                    <ul>
+                        <% users.forEach( (elt) => {%>
+                            <li><a href="/<%= urlType %>/<%= elt %>"><%= elt %></a></li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- load local js -->
+    <script src="/main.js"></script>
+</body>
+</html>

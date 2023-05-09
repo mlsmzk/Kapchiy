@@ -1,125 +1,19 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
 body{
   background-color: #93BFCF;
-  margin: 0;
 }
-
-.main{
-  margin-left: 300px; /* Same as the width of the sidebar */
-}
-
-h1 {
-  color: #EEE9DA;
+h1{
+  color: rgba(255, 255, 255, 0.75);;
   text-align: center;
-  font-size: 48px;
-}
-
-/* search form */
-.searchForm
-{
-  display: block;
-  text-align: center;
-  padding: 10px;
-  margin: 0px;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-}
-
-.searchForm #textbox{
-  margin-top: 100px;
-  width: 600px;
-  height: 20px;
-  border: 5px solid white;
-  border-radius: 5px;
-}
-
-.searchForm #submit{
-  height: 32px;
-  width: 75px;
-  background-color: #BDCDD6;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-  color: white;
-}
-
-/* The sidebar navbar */
-#navbar {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 160px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  text-align: center;
-  background-color: #6096B4;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  list-style-type: none;
-  padding-top: 100px;
-  margin: 0;
-  padding-right: 50px;
-}
-
-/* The navigation menu links */
-#navbar a {
-  padding: 30px 20px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #f1f1f1;
-  display: block;
-}
-
-/* When you mouse over the navigation links, change their color */
-#navbar a:hover {
-  color: #88969e;
-}
-/* Logout Button*/
-#navbar .logout button{
-  background-color: #BDCDD6;
-  border: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 16px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  #navbar {padding-top: 15px;}
-  #navbar a {font-size: 18px;}
-}
-
-/* Homepage Post Gallery */
-div.gallery {
-  margin: 5px;
-  margin-top: 50px;
-  margin-left: 25px;
-  border: 5px solid #ffffff;
-  border-radius: 5px;
-  float: left;
-  width: 300px;
-  height: 600px;
-  font-size: small;
-  background-color: #ffffff;
-}
-
-div.gallery:hover {
-  border: 5px solid #6096B4;
-}
-
-div.gallery img {
-  width: 100%;
-  height: auto;
-}
-
-div.gallery h2{
-  text-align: center;
-}
-
-div.desc {
-  padding: 15px;
-  text-align: center;
-  width: 60px;
-  background-color: #dddddd;
+  font-size: 30px;
+  padding-bottom: 50px;
+  padding-top: 25px;
 }
 
 /* Login Form*/
@@ -148,12 +42,13 @@ div.desc {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #EEE9DA;
+  background: #50788e;;
+
   width: 100%;
   border: 0;
   padding: 15px;
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 18px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
@@ -166,56 +61,329 @@ div.desc {
   color: #255067;
   font-size: 30px;
 }
-/* Upload Form*/
 
-.uploadForm{
-  background: #FFFFFF;
+
+.wrapper{
+  display: flex;
+  position: relative;
+}
+
+/* Sidebar */
+.wrapper .sidebar{
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  background-color: #6096B4;
+  padding: 30px 0; 
+}
+.wrapper .sidebar h2{
+  color:#ffffff;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.wrapper .sidebar ul li{
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(225, 225, 225, 0.05);
+}
+
+.wrapper .sidebar ul li:hover{
+  background-color: #65a3c5;;
+}
+
+.wrapper .sidebar ul li a{
+  padding: 20px 20px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 16px;
+  color: #FFFFFF;
+  display: block;
+}
+
+.wrapper .sidebar ul li a:hover{
+  color: #ffffff;;
+}
+
+/* Logout Button */
+.wrapper .sidebar .logout{
+  position: absolute;
+  bottom: 100px;
+  left:50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.wrapper .sidebar .logout button{
+  background-color: #a2cfe8;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.wrapper .sidebar .logout button a{
+  display: block;
+  text-decoration: none;
+  font-size: 12px;
+  color: #FFFFFF;
+}
+
+.wrapper .main_content{
+  width: 100%;
+  margin-left: 200px;
+}
+
+/* Main Content */
+
+/* Gallery */
+
+.wrapper .main_content .photo-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-left: 9px;
+}
+
+.wrapper .main_content .gallery{
+  margin: 10px 0 5px;
+  border: none;
+  border-radius: 2.5px;
+  float: left;
+  width: 400px;
+  height: auto;
+  font-size: small;
+  background-color:  rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+/* Post Content*/
+.wrapper .main_content .gallery h2 {
+  color: white;
+  padding: 20px;
+  background: rgba(162, 207, 232, 0.75);
+}
+
+.wrapper .main_content .gallery img {
+  /* padding: 20px; */
+  width: 400px;
+  height: 400px;
+}
+
+.wrapper .main_content .gallery .caption{
+  padding: 10px;
+}
+
+.wrapper .main_content .gallery .like-container{
+  padding: 10px;
+}
+
+.wrapper .main_content .gallery .like-container p{
+  padding-top: 10px;
+}
+.wrapper .main_content .gallery .like-container button{
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 50px;
+  height: 40px;
+  background: rgba(147, 191, 207,0.5);
+  color: #fefefe;
+}
+
+.wrapper .main_content .gallery .postTag{
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.wrapper .main_content .gallery .postTag ul{
+  padding: 5px;
+}
+
+
+
+/* .wrapper .main_content .gallery:hover {
+  border: 5px solid #6096B4;
+} */
+
+/*
+
+.wrapper .main_content .gallery .caption {
+  height: 40px;
+  width: 400px;
+  padding: 6px;
+  position: relative;
+  bottom: 43px;
+  background:rgba(255, 255, 255, 0.25);
+  color: white;;
+}
+
+.wrapper .main_content .gallery h3 {
+  padding: 5px;
+}
+
+.wrapper .main_content .gallery figcaption{
+  padding: 10px;
+  margin-left: 10px;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.wrapper .main_content .gallery figure{
+  height: 425px;
+}
+.wrapper .main_content .gallery:hover .caption {
+  height: 100px;
+  background:rgba(162, 207, 232, 0.75);
+  bottom: 103px;
+}
+
+.wrapper .main_content .gallery:hover figcaption{
+  visibility: visible;
+  opacity: 1;
+} */
+
+
+
+/* Upload Form */
+.wrapper .main_content .uploadForm{
+  background:rgba(255, 255, 255, 0.3);
   max-width: 800px;
   margin: 0 auto 100px;
   padding: 50px;
   border-radius: 20px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
-.uploadForm p{
+
+.wrapper .main_content .uploadForm p{
   color: #255067 ;
   font-size: 20px;
 }
-.uploadForm input{
+.wrapper .main_content .uploadForm input{
   width: 100%;
   padding: 15px;
   margin: 8px 0;
   box-sizing: border-box;
-  border: 1px solid #ffffff;
-  background-color: #efede7;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;;
   outline: none;
 }
 
+/* Search Form */
+.wrapper .main_content .searchForm{
+  width: 100%;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper .main_content .searchForm form{
+  width: 100%;
+  max-width: 700px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  border-radius: 60px;
+  padding: 10px 20px;
+}
+
+.wrapper .main_content .searchForm form input{
+  background: transparent;
+  flex: 1;
+  border: 0;
+  outline: none;
+  padding: 24px 20px;
+  font-size: 20px;
+  color: #fefefe;
+}
+.wrapper .main_content .selector{
+  padding: 10px;
+}
+
+.wrapper .main_content .searchForm form .selector select{
+  border: none;
+  cursor: pointer;
+  height: 35px;
+  background: rgba(147, 191, 207,0.02);
+  color: #fefefe;
+}
+
+.wrapper .main_content .searchForm form button{
+  border: none;
+  cursor: pointer;
+  border-radius: 30%;
+  width: 60px;
+  height: 40px;
+  background: rgba(147, 191, 207,0.5);
+  color: #fefefe;
+}
+
+/* Search Results */
+.wrapper .main_content .users{
+  padding: 50px;
+}
+
+.wrapper .main_content .users .listHeader{
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 30px;
+  padding-bottom: 25px;
+  padding-top: 25px;
+  
+}
+
+.wrapper .main_content .users ul{
+  left:50%;
+   /* transform: translateX(25%); */
+  /* display: flex;  */
+}
+
+.wrapper .main_content .users ul li{
+  /* width: 50%; */
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(225, 225, 225, 0.05);
+}
+
+.wrapper .main_content .users ul li:hover{
+  background-color: rgba(225, 225, 225, 0.2);
+}
+
+.wrapper .main_content .users ul li a{
+  padding: 20px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #dce9f0;
+  display: block;
+}
+
+.wrapper .main_content .users ul li a:hover{
+  color: #ffffff;
+}
+
+
 
 /* User Info*/
-#user-info h2 {
+.wrapper .main_content .user-info {
+  margin-left: 160px;
+  margin-right: 160px;
+  padding: 50px;
+} 
+.wrapper .main_content .user-info h2 {
   color: #255067;
   font-size: 25px;
 }
-#user-info h3,label{
+.wrapper .main_content .user-info h3,label{
   color: #255067;
   font-size: 15px;
 }
 
-/* Style page content
-#user-info {
-  margin-left: 160px;
-  margin-right: 160px;
-  padding: 0px 10px;
-} */
-
 /* User Profile: Bio, Following, NumOfPosts*/
-#user-profile{
+.wrapper .main_content .user-info .user-profile{
   max-width: 600px;
   margin: 0 auto 100px;
 }
 
-#user-profile .flex-container textarea {
+.wrapper .main_content .flex-container textarea {
   width: 50%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -225,7 +393,7 @@ div.desc {
   outline: none;
 }
 
-#user-profile .flex-container button{
+.wrapper .main_content .flex-container button{
   background-color: #BDCDD6;
   border: none;
   margin: 4px 2px;
@@ -234,31 +402,36 @@ div.desc {
 }
 
 /* User Post Styling*/
-#userPosts{
+.wrapper .main_content .user-info .userPosts{
   max-width: 600px;
   margin: 0 auto 100px;
 }
 
-#userPosts .post {
+.wrapper .main_content .user-info .userPosts .post {
   border: 5px solid #ffffff;
   border-radius: 5px;
   font-size: small;
   background-color: #ffffff;
 }
 
-#userPosts .post h2{
+.wrapper .main_content .user-info .userPosts .post h2{
   text-align: left;
 }
 
-#userPosts .post figure{
+.wrapper .main_content .user-info .userPosts .post figure{
   text-align: center;
 }
 
-#userPosts .post h3{
+.wrapper .main_content .user-info .userPosts .post h3{
   padding-left: 40px;
 }
 
-#userPosts .post ul{
+.wrapper .main_content .user-info .userPosts .post ul{
   padding-left: 55px;
 }
+
+.wrapper .main_content .user-info .userPosts .post img{
+  width: 300px;
+  height: 600px;
+} 
 

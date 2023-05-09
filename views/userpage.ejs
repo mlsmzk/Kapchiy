@@ -9,74 +9,75 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <div class="main">
-        <h1>Kapchiy</h1>
-        <!--partial for navbar-->
-        <%- include("partials/navbar_logged_in.ejs") %>
+    <div class="wrapper">
+        <div class="sidebar">
+            <!--partial for navbar-->
+            <%- include("partials/navbar_logged_in.ejs") %>
+        </div>
+        <div class="main_content">
+            <!--Header of the page of the user: name, bio, following-->
+            <div class="user-info">
+                <h2><%=user %></h2>
+                <div class="user-profile">
+                    <div class="flex-container"> <!-- flex container -->
+                        <h3 id="bio"><%=userBio%></h3>
+                        <ul id="profile-list" style="list-style: none;">
+                            <li><h3 id="posts-count"><strong><%=userPosts.length%></strong> posts</h3></li>
+                            <li><h3 id="following"><strong><%=following.length%></strong> following</h3></li>
+                            <li><h3 id="followers"><strong><%=followers.length%></strong> followers</h3></li>
+                        </ul>
+                        <% if (user !== username) { %>
+                            <form action="/addFollower/<%= user %>" method="POST">
+                                <button class="followBtn" type="button" name="<%= user %>">
+                                    Follow <%= user %>
+                                </button>
+                            </form>
+                        <% }; %>
 
-        <!--Header of the page of the user: name, bio, following-->
-        <div id="user-info">
-            <h2><%=user %></h2>
-            <div id="user-profile">
-                <div class="flex-container"> <!-- flex container -->
-                    <h3 id="bio"><%=userBio%></h3>
-                    <ul id="profile-list" style="list-style: none;">
-                        <li><h3 id="posts-count"><strong><%=userPosts.length%></strong> posts</h3></li>
-                        <li><h3 id="following"><strong><%=following.length%></strong> following</h3></li>
-                        <li><h3 id="followers"><strong><%=followers.length%></strong> followers</h3></li>
-                    </ul>
-                    <% if (user !== username) { %>
-                        <form action="/addFollower/<%= user %>" method="POST">
-                            <button class="followBtn" type="button" name="<%= user %>">
-                                Follow <%= user %>
-                            </button>
+                        <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
+                        <% if (user === username) { %>
+                        <!--upon hitting submit button, do an app.post in server.js-->
+                        <form method="POST" action="/editBio/<%= user %>">
+                        <p><label>Edit Bio:
+                            <textarea placeholder= "<%=userBio%>" rows="3" cols="30" name="bio" maxlength="200"></textarea>
+                        </label></p>
+                        <div id="the-count">
+                            <span id="current">0</span>
+                            <span id="maximum">/ 200</span>
+                        </div>
+                        <p><button type="button" class="editBioBtn" name="<%= user %>">Save Bio</button></p>
                         </form>
+                        <% }; %>
+                    </div> <!-- flex container -->
+                </div>
+                <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
+                <!--User posts-->
+                <div class="userPosts">
+                    <h2>Posts</h2>
+                    <% userPosts.forEach((post) => {%>
+                    <div class="post">
+                    <h3><%= post.title %></h3>
+                    <figure>
+                        <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
+                        <figcaption><%= post.caption || 'Untitled' %></figcaption>
+                    </figure>
+                    <h3>Tags:</h3>
+                    <ul>
+                    <% if (post.tags) { %>
+                        <% post.tags.split(',').forEach((tag) => { %>
+                        <li><%= tag %></li>
+                        <% }); %>
+                    </ul>
+                    <% } else { %>
+                    <p>No tags attached to this post</p>
                     <% }; %>
-
-                    <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
-                    <% if (user === username) { %>
-                    <!--upon hitting submit button, do an app.post in server.js-->
-                    <form method="POST" action="/editBio/<%= user %>">
-                    <p><label>Edit Bio:
-                        <textarea placeholder= "<%=userBio%>" rows="3" cols="30" name="bio" maxlength="200"></textarea>
-                    </label></p>
-                    <div id="the-count">
-                        <span id="current">0</span>
-                        <span id="maximum">/ 200</span>
-                    </div>
-                    <p><button type="button" class="editBioBtn" name="<%= user %>">Save Bio</button></p>
-                    </form>
-                    <% }; %>
-                </div> <!-- flex container -->
-            </div>
-            <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
-            <!--User posts-->
-            <div id="userPosts">
-                <h2>Posts</h2>
-                <% userPosts.forEach((post) => {%>
-                <div class="post">
-                <h3><%= post.title %></h3>
-                <figure>
-                    <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
-                    <figcaption><%= post.caption || 'Untitled' %></figcaption>
-                </figure>
-                <h3>Tags:</h3>
-                <ul>
-                <% if (post.tags) { %>
-                    <% post.tags.split(',').forEach((tag) => { %>
-                    <li><%= tag %></li>
                     <% }); %>
-                </ul>
-                <% } else { %>
-                <p>No tags attached to this post</p>
-                <% }; %>
-                <% }); %>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
-    
   <!-- load local js -->
   <script src="/main.js"></script>
 </body>
