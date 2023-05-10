@@ -47,6 +47,35 @@
                             </form>
                         <% }; %>
 
+        <!--Header of the page of the user: name, bio, following-->
+        <div class="info">
+            <h3><%=user %></h3>
+            <div class="info-data">
+                <div class="data">
+                    <h4>Following</h4>
+                    <p><%=following.length%>  following</p>
+                </div>
+                <div class="data">
+                    <h4>Followers</h4>
+                    <p><%=followers.length%>  followers</p>
+                </div>
+                <div class="data">
+                    <h4>Posts</h4>
+                    <p><%=userPosts.length%>  posts</p>
+                </div>
+            </div>
+            <h3>Bio</h3>
+            <p id="bio"><%=userBio%></p>
+        </div>
+        <div id="user-info">
+            <div id="user-profile">
+                <div class="flex-container"> <!-- flex container -->
+                    <% if (user !== username) { %>
+                        <form action="/addFollower/<%= user %>" method="POST">
+                            <button class="followBtn" type="button" name="<%= user %>">
+                                Follow <%= user %>
+                            </button>
+                    <% }; %>
                         <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
                         <% if (user === username) { %>
                         <!--upon hitting submit button, do an app.post in server.js-->

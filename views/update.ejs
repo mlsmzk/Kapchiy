@@ -15,7 +15,28 @@
     <div class="main">
         
         <h1>Kapchiy</h1>
-        <%- include("partials/navbar_logged_in.ejs") %>    
+        <%- include("partials/navbar_logged_in.ejs") %>  
+        
+        <div class="updateForm">
+            <form method="POST" action= <%='/update/' + post.postId %>>
+                <p>
+                    <label for="title">Title
+                        <input type="text" name="title" value="<%=post.title%>">
+                    </label>
+                </p>
+                <p>
+                    <label>Caption
+                        <input type="text" name="caption" value="<%=post.caption%>">
+                    </label>
+                </p>
+                <p>
+                    <label>Tags (separate by ,)
+                        <input type="text" name="tags" value="<%=post.tags%>">
+                    </label>
+                </p>
+                <p><input type="submit" value="Update Post"></p>
+            </form>
+        </div>
     </div>
     <div id="flashes">
         <% if (messages && messages.error) { %>
@@ -40,16 +61,7 @@
 
     <h1>Update Post</h1>
 
-    <form method="POST" action= <%='/update/' + postId %>>
-        <p><label>Movie ID/TT: <%=tt%> </label></p>
-        <p><label>Title: <input type="text" id="title" name="title" value= "<%=title%>"></label></p>
-        <p><label>Release year: <input type="text" id="year" name='year' value= '<%=year%>'></label></p>
-        <p><label>Added By ID: <input type="text" id="addedbyID" name="addedbyID" value='<%=addedNM%>'></label></p>
-        <p><label>Added By: <%= addedName%></label></p>
-        <p><label>Director ID: <input type="text" id="directorID" name="directorID" value="<%=directorNM%>"></label></p>
-        <p><label>Director: <%= directorName%></label></p>
-        <p><input type="submit" value="Update Movie"></p>
-    </form>
+    
 
 
     <script src="/main.js"></script>
