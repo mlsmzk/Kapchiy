@@ -21,7 +21,6 @@ const multer = require('multer');
 
 const { Connection } = require('./connection');
 const cs304 = require('./cs304');
-const filefns = require('./file');
 const { userAgentMiddleware } = require('@aws-sdk/middleware-user-agent');
 
 // Create and configure the app
@@ -92,7 +91,6 @@ var upload = multer({ storage: storage,
                       limits: {fileSize: 1_000_000 }});
 
 bcrypt = require('bcrypt');
-const salt = bcrypt.genSaltSync(saltRounds);
 
 // collections in the user's personal database
 
@@ -163,7 +161,7 @@ app.post('/register', async (req,res) => {
     } else {
         const password = req.body.password;
         //hashing the password
-        const hashed = bcrypt.hashSync(password,salt);
+        const hashed = bcrypt.hashSync(password);
         const results = await usersCol.insertOne({username, hashed: hashed, bio: "", followers: [], following: []});
         console.log('created user', results);
         req.session.username = req.body.username;
