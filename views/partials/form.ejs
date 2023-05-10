@@ -1,6 +1,20 @@
 <div class="searchForm">
-    <form action="/query" method="GET">
-        <input id="textbox" name="term">
-        <input id="submit" type="submit" value="search">
+    <form action="/explore/" method="GET">
+
+        <label> Search
+            <input type="text" placeholder="search for user or tags" name="term">
+        </label>
+
+        <div class="selector">
+            <label> Filter
+            <select required name="kind">
+                <option value="">choose one</option>
+                <option value="user">user</option>
+                <option value="tag">tag</option>
+            </select>
+            </label>
+        </div>
+    
+        <button type="submit">submit</button>
     </form>
 </div>

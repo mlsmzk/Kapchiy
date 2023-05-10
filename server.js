@@ -235,6 +235,7 @@ app.get('/posts/:postid', async (req, res) => {
     }
 });
 
+
 app.get('/search/', (req, res) => {
     const username = req.session.username;
     if (!username) {
@@ -247,7 +248,7 @@ app.get('/search/', (req, res) => {
     }
 });
 
-app.get('/query', (req, res) => {
+app.get('/explore/', async (req,res) => {
     const username = req.session.username;
     if (!username) {
         // Not logged in / signed up case
@@ -255,32 +256,93 @@ app.get('/query', (req, res) => {
         req.flash('info', "You are not logged in");
         return res.redirect('/login');
     } else {
-        let query = req.query.term;
-        res.redirect('/search/' + query);
+        let kind = req.query.kind;
+        let searchTerm = req.query.term;
+
+        const db = await Connection.open(mongoUri, kdb);
+        let regSearch = new RegExp(searchTerm, 'i');
+        let regString = regSearch.toString();
+        regString = regString.slice(1, regString.length - 2);
+
+        if (kind == "user"){
+            const users = db.collection(USERS);
+            const found = await users.find({username:{$regex:regSearch}}).toArray();
+            if(found.length> 1){
+                let userArray = found.map(function(user){return [`${user.username}`];});
+                console.log("userarray match found:", userArray);
+                let listH = 'Users matching ' + regString+':';
+                let uType = 'userpage';
+                return res.render('users.ejs', {
+                                    listHeader: listH,
+                                    users: userArray,
+                                    urlType: uType,
+                                    error:''
+                                    });
+            }
+            else if (found.length ==1){
+                res.redirect('/userpage/'+ regString);
+            }
+            else {
+                req.flash('error', "User not found");
+                return res.render('users.ejs', {
+                    listHeader: '',
+                    users: [],
+                    urlType: ''
+                    });
+            }
+        }
+
+        else if (kind == "tag"){
+            const posts = db.collection(POSTS);
+            let matches = await posts.find({tags: {$regex:regSearch}}).toArray();
+            if(matches.length >1){
+                return res.render('posts.ejs', {postDesc : "Posts matching " + regString,
+                                     userPosts: matches});
+            }
+            else{
+                req.flash('error', "No posts with that tag found");
+                return res.render('posts.ejs',{postDesc:'',
+                userPosts: [] });
+            }
+        }
     }
 });
 
-app.get('/search/:term', async (req, res) => {
-    const username = req.session.username;
-    if (!username) {
-        // Not logged in / signed up case
-        console.log("not logged in");
-        req.flash('info', "You are not logged in");
-        return res.redirect('/login');
-    } else {
-    let term = req.params.term;
-    const db = await Connection.open(mongoUri, kdb);
-    console.log("term", term);
-    const posts = db.collection(POSTS);
-    const reg = new RegExp(term, "i");
-    let regString = reg.toString();
-    regString = regString.slice(1, regString.length - 2);
-    let matches = await posts.find({tags: reg}).toArray();
-    console.log("match found:", matches);
-    return res.render('posts.ejs', {postDesc : "Posts matching " + regString,
-                                    userPosts: matches});
-    }
-});
+
+// app.get('/query', (req, res) => {
+//     const username = req.session.username;
+//     if (!username) {
+//         // Not logged in / signed up case
+//         console.log("not logged in");
+//         req.flash('info', "You are not logged in");
+//         return res.redirect('/login');
+//     } else {
+//         let query = req.query.term;
+//         res.redirect('/search/' + query);
+//     }
+// });
+
+// app.get('/search/:term', async (req, res) => {
+//     const username = req.session.username;
+//     if (!username) {
+//         // Not logged in / signed up case
+//         console.log("not logged in");
+//         req.flash('info', "You are not logged in");
+//         return res.redirect('/login');
+//     } else {
+//     let term = req.params.term;
+//     const db = await Connection.open(mongoUri, kdb);
+//     console.log("term", term);
+//     const posts = db.collection(POSTS);
+//     const reg = new RegExp(term, "i");
+//     let regString = reg.toString();
+//     regString = regString.slice(1, regString.length - 2);
+//     let matches = await posts.find({tags: reg}).toArray();
+//     console.log("match found:", matches);
+//     return res.render('posts.ejs', {postDesc : "Posts matching " + regString,
+//                                     userPosts: matches});
+//     }
+// });
 
 app.get('/create', (req, res) => {
     const username = req.session.username;

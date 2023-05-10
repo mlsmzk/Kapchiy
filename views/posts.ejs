@@ -2,40 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>People App</title>
+    <title>Kapchiy</title>
     <!-- load local stylesheet (css) -->
     <link rel="stylesheet" href="/styles.css" />
     <!-- loading jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <div class="main">
-        <h1>Kapchiy</h1>
-        <%- include("partials/navbar_logged_in.ejs") %>
-
-        <h2><%= postDesc %></h1>
-
-        <% userPosts.forEach((post) => { %>
-        
-        <div class="flex-container">
-            <h3><%= post.title %></h3>
-            <figure>
-                <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
-                <figcaption><%= post.caption || 'Untitled' %></figcaption>
-            </figure>
-            <h3>Tags:</h3>
-            <ul>
-            <% if (post.tags) { %>
-                <% post.tags.split(',').forEach((tag) => { %>
-                <li><%= tag %></li>
-                <% }); %>
-            </ul>
-            <% } else { %>
-            <p>"No tags attached to this post"</p>
-            <% }; %>
+    <div class="wrapper">
+        <div class="sidebar">
+            <%- include("partials/navbar_logged_in.ejs") %>
         </div>
-        <% }); %>
+        <div class="main_content">
+            <div id="flashes">
+                <%- include("partials/flashes.ejs")%>
+            </div>
+        
+            <h1>Tags</h1>
+            <%- include("partials/form.ejs") %>
 
+            <h2><%= postDesc %></h1>
+
+            <% userPosts.forEach((post) => { %>
+            
+            <div class="flex-container">
+                <h3><%= post.title %></h3>
+                <figure>
+                    <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
+                    <figcaption><%= post.caption || 'Untitled' %></figcaption>
+                </figure>
+                <h3>Tags:</h3>
+                <ul>
+                <% if (post.tags) { %>
+                    <% post.tags.split(',').forEach((tag) => { %>
+                    <li><%= tag %></li>
+                    <% }); %>
+                </ul>
+                <% } else { %>
+                <p>"No tags attached to this post"</p>
+                <% }; %>
+            </div>
+            <% }); %>
+
+        </div>
     </div>
     <!-- load local js -->
     <script src="/main.js"></script>

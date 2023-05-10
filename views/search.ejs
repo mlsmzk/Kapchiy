@@ -9,11 +9,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <div class="main">
-        <h1>Kapchiy</h1>
-
-        <%- include("partials/navbar_logged_in.ejs") %>
-        <%- include("partials/form.ejs") %>
+    <div class="wrapper">
+        <div class="sidebar">
+            <%- include("partials/navbar_logged_in.ejs") %>
+        </div>
+        <div class="main_content">
+            <h1>Explore</h1>
+            <%- include("partials/form.ejs") %>
+        </div>
     </div>
     
    <!-- load local js -->
