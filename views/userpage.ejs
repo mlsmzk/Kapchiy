@@ -34,18 +34,18 @@
                 </div>
                 <h3>Bio</h3>
                 <p id="bio"><%=userBio%></p>
-            </div>
+            </div> -->
             
-            <div class="user-info">
+            <!-- <div class="user-info">
                 <div class="user-profile">
-                    <div class="flex-container">  flex container -->
-                        <!-- <% if (user !== username) { %>
+                    <div class="flex-container"> 
+                        <% if (user !== username) { %>
                             <form action="/addFollower/<%= user %>" method="POST">
                                 <button class="followBtn" type="button" name="<%= user %>">
                                     Follow <%= user %>
                                 </button>
                             </form>
-                        <% }; %> --> 
+                        <% }; %> -->
 
         <!--Header of the page of the user: name, bio, following-->
         <div class="info">
@@ -67,8 +67,8 @@
             <h3>Bio</h3>
             <p id="bio"><%=userBio%></p>
         </div>
-        <div id="user-info">
-            <div id="user-profile">
+        <div class="user-info">
+            <div class="user-profile">
                 <div class="flex-container"> <!-- flex container -->
                     <% if (user !== username) { %>
                         <form action="/addFollower/<%= user %>" method="POST">

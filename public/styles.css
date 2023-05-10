@@ -1,9 +1,9 @@
 *{
   margin: 0;
-}
-
-.main{
-  margin-left: 300px; /* Same as the width of the sidebar */
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
 }
 
 h1 {
@@ -12,86 +12,6 @@ h1 {
   font-size: 48px;
 }
 
-.info {
-  position: absolute;
-  margin-bottom: 25px;
-  box-shadow: 0 1px 20px 0 rgba(69,90,100,0,08);
-}
-
-.info h3 {
-  margin-bottom: 15px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #e0e0e0;
-  color: #353c4e;
-  text-transform: uppercase;
-  letter-spacing: px;
-}
-
-.info .info-data {
-  display: flex;
-  justify-content: space-between;
-}
-
-.data {
-  padding: 10%;
-}
- 
-
-/* search form */
-.searchForm
-{
-  display: block;
-  text-align: center;
-  padding: 10px;
-  margin: 0px;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
-}
-
-.searchForm #textbox{
-  margin-top: 100px;
-  width: 600px;
-  height: 20px;
-  border: 5px solid white;
-  border-radius: 5px;
-}
-
-.searchForm #submit{
-  height: 32px;
-  width: 75px;
-  background-color: #BDCDD6;
-  border: none;
-  cursor: pointer;
-  border-radius: 10px;
-  color: white;
-}
-
-/* The sidebar navbar */
-#navbar {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 160px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  text-align: center;
-  background-color: #6096B4;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  list-style-type: none;
-  padding-top: 100px;
-  margin: 0;
-  padding-right: 50px;
-}
-
-/* The navigation menu links */
-#navbar a {
-  padding: 30px 20px;
-  padding: 0;
-  box-sizing: border-box;
-  list-style: none;
-  text-decoration: none;
-}
 body{
   background-color: #93BFCF;
 }
