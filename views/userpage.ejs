@@ -15,7 +15,7 @@
             <%- include("partials/navbar_logged_in.ejs") %>
         </div>
         <div class="main_content">
-            <!--Header of the page of the user: name, bio, following-->
+            <!-- Header of the page of the user: name, bio, following
             <div class="info">
                 <h3><%=user %></h3>
                 <div class="info-data">
@@ -38,14 +38,14 @@
             
             <div class="user-info">
                 <div class="user-profile">
-                    <div class="flex-container"> <!-- flex container -->
-                        <% if (user !== username) { %>
+                    <div class="flex-container">  flex container -->
+                        <!-- <% if (user !== username) { %>
                             <form action="/addFollower/<%= user %>" method="POST">
                                 <button class="followBtn" type="button" name="<%= user %>">
                                     Follow <%= user %>
                                 </button>
                             </form>
-                        <% }; %>
+                        <% }; %> --> 
 
         <!--Header of the page of the user: name, bio, following-->
         <div class="info">
