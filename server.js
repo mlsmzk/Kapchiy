@@ -311,42 +311,6 @@ app.get('/explore/', async (req,res) => {
     }
 });
 
-
-// app.get('/query', (req, res) => {
-//     const username = req.session.username;
-//     if (!username) {
-//         // Not logged in / signed up case
-//         console.log("not logged in");
-//         req.flash('info', "You are not logged in");
-//         return res.redirect('/login');
-//     } else {
-//         let query = req.query.term;
-//         res.redirect('/search/' + query);
-//     }
-// });
-
-// app.get('/search/:term', async (req, res) => {
-//     const username = req.session.username;
-//     if (!username) {
-//         // Not logged in / signed up case
-//         console.log("not logged in");
-//         req.flash('info', "You are not logged in");
-//         return res.redirect('/login');
-//     } else {
-//     let term = req.params.term;
-//     const db = await Connection.open(mongoUri, kdb);
-//     console.log("term", term);
-//     const posts = db.collection(POSTS);
-//     const reg = new RegExp(term, "i");
-//     let regString = reg.toString();
-//     regString = regString.slice(1, regString.length - 2);
-//     let matches = await posts.find({tags: reg}).toArray();
-//     console.log("match found:", matches);
-//     return res.render('posts.ejs', {postDesc : "Posts matching " + regString,
-//                                     userPosts: matches});
-//     }
-// });
-
 app.get('/create', (req, res) => {
     const username = req.session.username;
     if (!username) {
