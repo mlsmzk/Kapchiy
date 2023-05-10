@@ -46,6 +46,8 @@
             <% if (post.tags) { %>
                 <% post.tags.split(',').forEach((tag) => { %>
                 <li><%= tag %></li>
+            <% }) }; %>
+    <% }); %>
     <div class="wrapper">
         <div class="sidebar">
             <%- include("partials/navbar_logged_in.ejs") %> <%# Add flashes partial %>

@@ -62,6 +62,7 @@
                             <button class="followBtn" type="button" name="<%= user %>">
                                 Follow <%= user %>
                             </button>
+                    <% }; %>
                         <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
                         <% if (user === username) { %>
                         <!--upon hitting submit button, do an app.post in server.js-->
@@ -99,7 +100,6 @@
                     <% } else { %>
                     <p>No tags attached to this post</p>
                     <% }; %>
-<<<<<<< HEAD
 
                     <!--if currentUser == owner of the user page, button to let them edit their bio and such-->
                     <% if (user === username) { %>
@@ -139,10 +139,8 @@
                     <p>No tags attached to this post</p>
                     <% }; %>
                     <% }); %>
-=======
                     <% }); %>
                     </div>
->>>>>>> 79e68d8b5cd467cfc1f0191d34091517a2e2619b
                 </div>
             </div>
 
