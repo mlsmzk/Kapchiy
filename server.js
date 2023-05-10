@@ -174,6 +174,9 @@ app.post('/register', async (req,res) => {
 app.post('/login', async (req,res) => {
     const username = req.body.username;
     const password = req.body.password;
+    console.log(password);
+    password = bcrypt.hashSync(password);
+    console.log(password);
     const db = await Connection.open(mongoUri, kdb);
     var existingUsers = await db.collection(USERS).find({username: username}).toArray();
     if (existingUsers.length === 0 ) {
@@ -182,7 +185,7 @@ app.post('/login', async (req,res) => {
         return res.render('login.ejs')
     }
     existingUser = existingUsers[0];
-    if (existingUser.password !== password) {
+    if (existingUser.hashed != password) {
         console.log("Incorrect password");
         req.flash('error', "Incorrect password");
         return res.render('login.ejs');
