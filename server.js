@@ -28,6 +28,8 @@ const { userAgentMiddleware } = require('@aws-sdk/middleware-user-agent');
 
 const app = express();
 const { createHash } = require('crypto'); // For use in function for hashing postId
+const { MongoBulkWriteError } = require('mongodb');
+const { update } = require('lodash');
 
 
 // Morgan reports the final status code of a request's response
@@ -317,6 +319,51 @@ app.post('/create', upload.single('photo'), async (req, res) => {
     return res.redirect('/');
 });
 
+app.post('/delete/:postId', async (req, res) => {
+    const db = await Connection.open(mongoUri, kdb);
+    let postId = req.params.postId;
+    let post = await db.collection(POSTS).deleteOne({"postId": postId});
+    req.flash('info', 'Post has been deleted successfully');
+    return res.redirect('/')
+})
+
+
+app.get('/update/:postId', async (req, res) => {
+    let postId = req.params.postId;
+    const username = req.session.username;
+    if (!username) {
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    }
+    const db = await Connection.open(mongoUri, kdb);
+    let updatePost = await db.collection(POSTS).find({
+        'postId': postId}).toArray();
+    let result = updatePost[0];;
+    console.log(result);
+    console.log(result.title);
+    return res.render("update.ejs", {post: result});
+})
+
+app.post('/update/:postId', async (req, res)=> {
+    const username = req.session.username;
+    if (!username) {
+        req.flash('info', "You are not logged in");
+        return res.redirect('/login');
+    }
+    let tagString = req.body.tags.replaceAll("\\s", "");
+    console.log('updated data', req.body);
+    // insert file data into mongodb
+    const db = await Connection.open(mongoUri, kdb);
+    const result = await db.collection(POSTS)
+          .updateOne({postId: req.params.postId}, {$set: 
+                    {title: req.body.title,
+                    caption: req.body.caption}});
+    console.log('insertOne result', result);
+    // always nice to confirm with the user
+    req.flash('info', 'file uploaded');
+    return res.redirect('/');
+})
+
 app.post('/addFollower/:user', async (req,res) => {
     let user = req.params.user;
     const db = await Connection.open(mongoUri, kdb);
@@ -354,6 +401,8 @@ app.post('/editBio/:user', async (req,res) => {
     console.log("update: ", update);
     return res.json({error : false, bio : bio});
 });
+
+
 
 //increments the likes for a post and returns the updated document
 app.post('/like/:postId', async (req, res) => {
@@ -445,6 +494,7 @@ app.get('/uploads/:file', async (req, res) => {
     return res.sendFile(path.join(__dirname, pathname));
     }
 });
+
 
 // Error route, belongs at end of code
 app.use((err, req, res, next) => {

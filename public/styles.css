@@ -13,6 +13,31 @@ h1 {
   font-size: 48px;
 }
 
+.info {
+  position: absolute;
+  margin-bottom: 25px;
+  box-shadow: 0 1px 20px 0 rgba(69,90,100,0,08);
+}
+
+.info h3 {
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #353c4e;
+  text-transform: uppercase;
+  letter-spacing: px;
+}
+
+.info .info-data {
+  display: flex;
+  justify-content: space-between;
+}
+
+.data {
+  padding: 10%;
+}
+ 
+
 /* search form */
 .searchForm
 {

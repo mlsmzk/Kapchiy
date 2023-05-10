@@ -21,6 +21,10 @@
                 <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
                 <figcaption><%= post.caption || 'Untitled' %></figcaption>
             </figure>
+          
+            <form method="POST" action= "/delete/<%= post.postId %>" >
+                <p><input type="submit" value= "Delete <%=post.postId%>" ></p>
+            </form>
             <div class="like-container">
                 <form method="POST" action="/like/<%= post.postId %>">
                     <button data-liker="<%= username%>" data-id="<%=post.postId%>" class="likeBtn" type="button" name="likeBtn">
@@ -32,6 +36,11 @@
                     Likes: <% (post.likes.length > 0) ? post.likes.length : '0' %>
                 </p>
             </div>
+
+            <form method="GET" action="/update/<%= post.postId %>">
+                <p><input type="submit" value="Update <%=post.postId%>"></p>
+            </form>
+
             <div class="postTag">Tags:</div>
             <ul>
             <% if (post.tags) { %>
