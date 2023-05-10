@@ -91,6 +91,7 @@ var upload = multer({ storage: storage,
                       // max fileSize in bytes
                       limits: {fileSize: 1_000_000 }});
 
+bcrypt = require('bcrypt');
 
 // collections in the user's personal database
 
@@ -160,7 +161,9 @@ app.post('/register', async (req,res) => {
         return res.render('login.ejs');
     } else {
         const password = req.body.password;
-        const results = await usersCol.insertOne({username, password, bio: "", followers: [], following: []});
+        //hashing the password
+        const hashed = bcrypt.hashSync(password);
+        const results = await usersCol.insertOne({username, hashed: hashed, bio: "", followers: [], following: []});
         console.log('created user', results);
         req.session.username = req.body.username;
         req.session.userId = results.insertedId.toString();
@@ -171,6 +174,9 @@ app.post('/register', async (req,res) => {
 app.post('/login', async (req,res) => {
     const username = req.body.username;
     const password = req.body.password;
+    console.log(password);
+    password = bcrypt.hashSync(password);
+    console.log(password);
     const db = await Connection.open(mongoUri, kdb);
     var existingUsers = await db.collection(USERS).find({username: username}).toArray();
     if (existingUsers.length === 0 ) {
@@ -179,7 +185,7 @@ app.post('/login', async (req,res) => {
         return res.render('login.ejs')
     }
     existingUser = existingUsers[0];
-    if (existingUser.password !== password) {
+    if (existingUser.hashed != password) {
         console.log("Incorrect password");
         req.flash('error', "Incorrect password");
         return res.render('login.ejs');
@@ -307,42 +313,6 @@ app.get('/explore/', async (req,res) => {
         }
     }
 });
-
-
-// app.get('/query', (req, res) => {
-//     const username = req.session.username;
-//     if (!username) {
-//         // Not logged in / signed up case
-//         console.log("not logged in");
-//         req.flash('info', "You are not logged in");
-//         return res.redirect('/login');
-//     } else {
-//         let query = req.query.term;
-//         res.redirect('/search/' + query);
-//     }
-// });
-
-// app.get('/search/:term', async (req, res) => {
-//     const username = req.session.username;
-//     if (!username) {
-//         // Not logged in / signed up case
-//         console.log("not logged in");
-//         req.flash('info', "You are not logged in");
-//         return res.redirect('/login');
-//     } else {
-//     let term = req.params.term;
-//     const db = await Connection.open(mongoUri, kdb);
-//     console.log("term", term);
-//     const posts = db.collection(POSTS);
-//     const reg = new RegExp(term, "i");
-//     let regString = reg.toString();
-//     regString = regString.slice(1, regString.length - 2);
-//     let matches = await posts.find({tags: reg}).toArray();
-//     console.log("match found:", matches);
-//     return res.render('posts.ejs', {postDesc : "Posts matching " + regString,
-//                                     userPosts: matches});
-//     }
-// });
 
 app.get('/create', (req, res) => {
     const username = req.session.username;
