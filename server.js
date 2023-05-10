@@ -92,6 +92,7 @@ var upload = multer({ storage: storage,
                       limits: {fileSize: 1_000_000 }});
 
 bcrypt = require('bcrypt');
+const salt = bcrypt.genSaltSync(saltRounds);
 
 // collections in the user's personal database
 
@@ -162,7 +163,7 @@ app.post('/register', async (req,res) => {
     } else {
         const password = req.body.password;
         //hashing the password
-        const hashed = bcrypt.hashSync(password);
+        const hashed = bcrypt.hashSync(password,salt);
         const results = await usersCol.insertOne({username, hashed: hashed, bio: "", followers: [], following: []});
         console.log('created user', results);
         req.session.username = req.body.username;
