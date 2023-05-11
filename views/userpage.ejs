@@ -130,7 +130,7 @@
                                     </form>
                                 </div>
                             <% }; %>
-                            <% if (user !== username) { %>
+                            
                                 <div class="like-container">
                                     <form method="POST" action="/like/<%= post.postId %>">
                                         <button data-liker="<%= username%>" data-id="<%=post.postId%>" class="likeBtn" type="button" name="likeBtn">
@@ -142,7 +142,7 @@
                                         Likes: <%= post.likes.length %>
                                     </p>
                                 </div>
-                            <% }; %>
+
                         <% }); %>
                     </div>
                 </div>
