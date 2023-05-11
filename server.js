@@ -55,8 +55,7 @@ app.use(cookieSession({
     res.locals.username = req.session.username;
     next();
   });
-
-
+  
 // app.use('/uploads', express.static('uploads'));
 
 function hash(string) {

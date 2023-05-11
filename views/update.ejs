@@ -17,30 +17,30 @@
             <%- include("partials/navbar_logged_in.ejs") %>
         </div>
     <div class="main_content">
-        
-        <h1>Kapchiy</h1>
-        
-        <div class="updateForm">
-            <form method="POST" action= <%='/update/' + post.postId %>>
-                <p>
-                    <label for="title">Title
-                        <input type="text" name="title" value="<%=post.title%>">
-                    </label>
-                </p>
-                <p>
-                    <label>Caption
-                        <input type="text" name="caption" value="<%=post.caption%>">
-                    </label>
-                </p>
-                <p>
-                    <label>Tags (separate by ,)
-                        <input type="text" name="tags" value="<%=post.tags%>">
-                    </label>
-                </p>
-                <p><input type="submit" value="Update Post"></p>
-            </form>
+        <div class="info">
+            <h1>Kapchiy</h1>
+            
+            <div class="updateForm">
+                <form method="POST" action= <%='/update/' + post.postId %>>
+                    <p>
+                        <label for="title">Title
+                            <input type="text" name="title" value="<%=post.title%>">
+                        </label>
+                    </p>
+                    <p>
+                        <label>Caption
+                            <input type="text" name="caption" value="<%=post.caption%>">
+                        </label>
+                    </p>
+                    <p>
+                        <label>Tags (separate by ,)
+                            <input type="text" name="tags" value="<%=post.tags%>">
+                        </label>
+                    </p>
+                    <p><input type="submit" value="Update Post"></p>
+                </form>
+            </div>
         </div>
-    
         <div id="flashes">
             <% if (messages && messages.error) { %>
                 <ul>
