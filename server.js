@@ -467,17 +467,6 @@ app.post('/like/:postId', async (req, res) => {
     }
 })
 
-// $('textarea').keyup(function() {
-    
-//     let characterCount = $(this).val().length,
-//         current = $('#current'),
-//         maximum = $('#maximum'),
-      
-//         theCount = $('#the-count');
-      
-//     current.text(characterCount);
-// });
-
 // app.post('/userpage/:userId/editBio', async (req,res) =>{
 //     let newBio = req.body.bio;
 //     console.log(newBio);
