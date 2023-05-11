@@ -91,7 +91,7 @@ var upload = multer({ storage: storage,
                       limits: {fileSize: 1_000_000 }});
 
 bcrypt = require('bcrypt');
-
+salt = bcrypt.genSaltSync();
 // collections in the user's personal database
 
 
@@ -161,7 +161,7 @@ app.post('/register', async (req,res) => {
     } else {
         const password = req.body.password;
         //hashing the password
-        const hashed = bcrypt.hashSync(password);
+        const hashed = bcrypt.hashSync(password,salt);
         const results = await usersCol.insertOne({username, hashed: hashed, bio: "", followers: [], following: []});
         console.log('created user', results);
         req.session.username = req.body.username;
@@ -174,8 +174,6 @@ app.post('/login', async (req,res) => {
     const username = req.body.username;
     const password = req.body.password;
     console.log(password);
-    password = bcrypt.hashSync(password);
-    console.log(password);
     const db = await Connection.open(mongoUri, kdb);
     var existingUsers = await db.collection(USERS).find({username: username}).toArray();
     if (existingUsers.length === 0 ) {
@@ -184,13 +182,15 @@ app.post('/login', async (req,res) => {
         return res.render('login.ejs')
     }
     existingUser = existingUsers[0];
-    if (existingUser.hashed != password) {
+    const match = await bcrypt.compare(password, existingUser.hashed);
+    if (!match) {
         console.log("Incorrect password");
         req.flash('error', "Incorrect password");
         return res.render('login.ejs');
-    } 
+    }
     req.session.userId = existingUser._id.toString();
     req.session.username = existingUser.username;
+    req.flash('info', 'successfully logged in as ' + req.session.username);
     console.log('logged in as', username, existingUser);
     return res.redirect('/userpage/' + username);
 });
