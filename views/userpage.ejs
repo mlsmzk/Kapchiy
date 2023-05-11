@@ -81,7 +81,7 @@
                         <!--upon hitting submit button, do an app.post in server.js-->
                         <form method="POST" action="/editBio/<%= user %>">
                         <p><label>Edit Bio:
-                            <textarea placeholder= "<%=userBio%>" rows="3" cols="30" name="bio" maxlength="200"></textarea>
+                            <textarea placeholder= "<%=userBio%>" rows="3" cols="30" name="bio" maxlength="200"><%= userBio %></textarea>
                         </label></p>
                         <div class="the-count">
                             <span id="current">0</span>
@@ -113,6 +113,14 @@
                         <% } else { %>
                         <p>No tags attached to this post</p>
                         <% }; %>
+                            <% if (user === username) { %>
+                                <form method="GET" action="/update/<%= post.postId %>"></form>
+                                    <p><button type="submit">Update Post</button></p>
+                                </form>
+                                <form method="GET" action="/update/<%= post.postId %>"></form>
+                                    <p><button type="submit">Update Post</button></p>
+                                </form>
+                            <% }; %> 
                         <% }); %>
                     </div>
                 </div>
