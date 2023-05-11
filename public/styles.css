@@ -172,7 +172,6 @@ h1{
 .wrapper .main_content .gallery h2 {
   color: white;
   padding: 20px;
-  /* background: rgba(162, 207, 232, 0.75); */
   background:#41718b ;
 }
 
@@ -216,50 +215,6 @@ h1{
 .wrapper .main_content .gallery .postTag ul{
   padding: 5px;
 }
-
-
-
-/* .wrapper .main_content .gallery:hover {
-  border: 5px solid #6096B4;
-} */
-
-/*
-
-.wrapper .main_content .gallery .caption {
-  height: 40px;
-  width: 400px;
-  padding: 6px;
-  position: relative;
-  bottom: 43px;
-  background:rgba(255, 255, 255, 0.25);
-  color: white;;
-}
-
-.wrapper .main_content .gallery h3 {
-  padding: 5px;
-}
-
-.wrapper .main_content .gallery figcaption{
-  padding: 10px;
-  margin-left: 10px;
-  visibility: hidden;
-  opacity: 0;
-}
-
-.wrapper .main_content .gallery figure{
-  height: 425px;
-}
-.wrapper .main_content .gallery:hover .caption {
-  height: 100px;
-  background:rgba(162, 207, 232, 0.75);
-  bottom: 103px;
-}
-
-.wrapper .main_content .gallery:hover figcaption{
-  visibility: visible;
-  opacity: 1;
-} */
-
 
 
 /* Upload Form */
@@ -353,8 +308,6 @@ h1{
 
 .wrapper .main_content .users ul{
   left:50%;
-   /* transform: translateX(25%); */
-  /* display: flex;  */
 }
 
 .wrapper .main_content .users ul li{
@@ -409,17 +362,27 @@ h1{
   display: flex;
   padding: 300px 10px;
 }
-.wrapper .main_content .flex-container{
+.wrapper .main_content .user-folow-bio{
   padding-left: 45px;
 }
-.wrapper .main_content .flex-container textarea{
+.wrapper .main_content .user-folow-bio textarea{
   display: flex;
   padding: 30px;
 }
 
 .wrapper .main_content .userPosts{
-  padding-left: 200px;
+  padding-left: 300px;
   padding-top: 0;
+}
+
+.wrapper .main_content .userPosts .post{
+  padding: 50px;
+  margin: 10px 0 5px;
+  border: none;
+  border-radius: 2.5px;
+  font-size: small;
+  background-color:  rgba(255, 255, 255, 0.45);
+  color: white;
 }
 
 .wrapper .main_content .userPosts img{
@@ -427,101 +390,78 @@ h1{
   height: 400px;
 }
 
-
-/* User Info*/
-/* .wrapper .main_content .user-info {
-  margin-left: 160px;
-  margin-right: 160px;
-  padding: 50px;
-} 
-.wrapper .main_content .user-info h2 {
-  color: #162B37;
-  font-size: 25px;
-}
-.wrapper .main_content .user-info h3,label{
-  color: #162B37;
-  font-size: 15px;
-}
-
-/* User Profile: Bio, Following, NumOfPosts*
-.wrapper .main_content .user-info .user-profile{
-  max-width: 600px;
-  margin: 0 auto 100px;
-}
-
-.wrapper .main_content .flex-container textarea {
-  width: 50%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 1px solid #ffffff;
-  border-radius: 5px;;
-  outline: none;
-}
-
-.wrapper .main_content .flex-container button{
-  background-color: #BDCDD6;
-  border: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 16px;
-}
-
-.wrapper .main_content .info {
-  position: absolute;
-  margin-bottom: 25px;
-  box-shadow: 0 1px 20px 0 rgba(69,90,100,0,08);
-}
-
-.wrapper .main_content .info h3 {
-  margin-bottom: 15px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #e0e0e0;
-  color: #353c4e;
-  text-transform: uppercase;
-  letter-spacing: px;
-}
-
-.wrapper .main_content .info .info-data {
-  display: flex;
-  justify-content: space-between;
-}
-
-.wrapper .main_content .data {
-  padding: 10%;
-}
-
-/* User Post Styling*
-.wrapper .main_content .user-info .userPosts{
-  max-width: 600px;
-  margin: 0 auto 100px;
-}
-
-.wrapper .main_content .user-info .userPosts .post {
-  border: 5px solid #ffffff;
-  border-radius: 5px;
-  font-size: small;
-  background-color: #ffffff;
-}
-
-.wrapper .main_content .user-info .userPosts .post h2{
-  text-align: left;
-}
-
-.wrapper .main_content .user-info .userPosts .post figure{
+.wrapper .main_content h3{
   text-align: center;
+  font-size: 24px;
 }
 
-.wrapper .main_content .user-info .userPosts .post h3{
-  padding-left: 40px;
+.wrapper .main_content .userPosts .caption{
+  padding: 10px;
 }
 
-.wrapper .main_content .user-info .userPosts .post ul{
-  padding-left: 55px;
+.wrapper .main_content .userPosts figcaption{
+  padding: 10px;
 }
 
-.wrapper .main_content .user-info .userPosts .post img{
-  width: 300px;
-  height: 600px;
-}  */
+.wrapper .main_content .userPosts  h2{
+  color: #353c4e;
+}
 
+.wrapper .main_content .like-container{
+  padding: 10px;
+  display: flex;
+}
+
+.wrapper .main_content .like-container p{
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.wrapper .main_content .like-container button{
+  width: 50px;
+  height: 30px;
+}
+
+.wrapper .main_content button{
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 60px;
+  height: 40px;
+  background: rgba(147, 191, 207,0.5);
+  color: #fefefe;
+}
+
+.wrapper .main_content .cud{
+  display: flex;
+  padding-left: 100px;
+}
+.wrapper .main_content .postTag{
+  padding: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.wrapper .main_content  .postTag ul{
+  padding: 5px;
+}
+
+.wrapper .main_content .flex-container{
+  padding: 50px;
+  border: none;
+  border-radius: 2.5px;
+  width: 750px;
+  height: auto;
+  background-color:  rgba(255, 255, 255, 0.45);
+  color: white;
+}
+
+.wrapper .main_content .flex-container img{
+  width: 500px;
+  height: 500px;
+  padding-left: 100px;
+}
+
+.wrapper .main_content .matchingPosts{
+  padding-left: 200px;
+  padding-top: 0;
+  padding-bottom: 50px;
+}

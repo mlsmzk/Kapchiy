@@ -15,38 +15,6 @@
             <%- include("partials/navbar_logged_in.ejs") %>
         </div>
         <div class="main_content">
-            <!-- Header of the page of the user: name, bio, following
-            <div class="info">
-                <h3><%=user %></h3>
-                <div class="info-data">
-                    <div class="data">
-                        <h4>Following</h4>
-                        <p><%=following.length%>  following</p>
-                    </div>
-                    <div class="data">
-                        <h4>Followers</h4>
-                        <p><%=followers.length%>  followers</p>
-                    </div>
-                    <div class="data">
-                        <h4>Posts</h4>
-                        <p><%=userPosts.length%>  posts</p>
-                    </div>
-                </div>
-                <h3>Bio</h3>
-                <p id="bio"><%=userBio%></p>
-            </div> -->
-            
-            <!-- <div class="user-info">
-                <div class="user-profile">
-                    <div class="flex-container"> 
-                        <% if (user !== username) { %>
-                            <form action="/addFollower/<%= user %>" method="POST">
-                                <button class="followBtn" type="button" name="<%= user %>">
-                                    Follow <%= user %>
-                                </button>
-                            </form>
-                        <% }; %> -->
-
         <!--Header of the page of the user: name, bio, following-->
         <div class="info">
             <h3><%=user %></h3>
@@ -69,7 +37,7 @@
         </div>
         <div class="user-info">
             <div class="user-profile">
-                <div class="flex-container"> <!-- flex container -->
+                <div class="user-folow-bio"> <!-- flex container -->
                     <% if (user !== username) { %>
                         <form action="/addFollower/<%= user %>" method="POST">
                             <button class="followBtn" type="button" name="<%= user %>">
@@ -96,14 +64,15 @@
                 <!--User posts-->
                 <div class="userPosts">
                     <h2>Posts</h2>
-                    <% userPosts.forEach((post) => {%>
                     <div class="post">
+                    <% userPosts.forEach((post) => {%>
                         <h3><%= post.title %></h3>
                         <figure>
                             <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
                             <figcaption><%= post.caption || 'Untitled' %></figcaption>
                         </figure>
-                        <h3>Tags:</h3>
+
+                        <div class="postTag">Tags:
                         <ul>
                         <% if (post.tags) { %>
                             <% post.tags.split(',').forEach((tag) => { %>
@@ -113,24 +82,8 @@
                         <% } else { %>
                         <p>No tags attached to this post</p>
                         <% }; %>
-                            <% if (user === username) { %>
-                                <div>
-                                    <form method="GET" action="/create">
-                                        <p><button type="submit">Create New Post</button></p>
-                                    </form>
-                                </div>
-                                <div>
-                                    <form method="GET" action="/update/<%= post.postId %>">
-                                        <p><button type="submit">Update Post</button></p>
-                                    </form>
-                                </div>
-                                <div>
-                                    <form method="POST" action="/delete/<%= post.postId %>">
-                                        <p><button type="submit">Delete Post</button></p>
-                                    </form>
-                                </div>
-                            <% }; %>
-                            
+                        </div>
+                        
                                 <div class="like-container">
                                     <form method="POST" action="/like/<%= post.postId %>">
                                         <button data-liker="<%= username%>" data-id="<%=post.postId%>" class="likeBtn" type="button" name="likeBtn">
@@ -142,6 +95,26 @@
                                         Likes: <%= post.likes.length %>
                                     </p>
                                 </div>
+
+                                <div class="cud">
+                                    <% if (user === username) { %>
+                                        <div>
+                                            <form method="GET" action="/create">
+                                                <p><button type="submit">Create New Post</button></p>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form method="GET" action="/update/<%= post.postId %>">
+                                                <p><button type="submit">Update Post</button></p>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form method="POST" action="/delete/<%= post.postId %>">
+                                                <p><button type="submit">Delete Post</button></p>
+                                            </form>
+                                        </div>
+                                    <% }; %>
+                                    </div>
 
                         <% }); %>
                     </div>
