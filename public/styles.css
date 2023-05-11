@@ -6,6 +6,11 @@
   text-decoration: none;
 }
 
+.userUploader a {
+  text-decoration: none;
+  color:#EEE9DA;
+}
+
 h1 {
   color: #EEE9DA;
   text-align: center;
