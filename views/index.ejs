@@ -19,7 +19,7 @@
                 <div class="photo-grid">
                     <% userPosts.forEach((post) => { %>
                     <div class="gallery">
-                        <h2 class="userUploader"><%= post.owner %></h2>
+                        <h2 class="userUploader"><a href="/userpage/<%= post.owner %>"><%= post.owner %></a></h2>
                         <figure>
                             <img class="uploadedImg" src="<%= post.path %>" alt="<%= post.title %>">
                             <div class="caption">
