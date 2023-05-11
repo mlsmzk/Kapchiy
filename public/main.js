@@ -77,8 +77,7 @@ function processFollow(resp) {
         alert('Error: '+resp.error);
     }
     console.log("this worked");
-    $('#followers').text(resp.followers + "followers");
-    $('#following').text(resp.following + "following")
+    $('#followers').text(resp.followers + "  followers");
 }
 
 $(".editBioBtn").on('click', function (event){

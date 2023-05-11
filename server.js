@@ -401,6 +401,7 @@ app.post('/addFollower/:user', async (req,res) => {
     console.log('req.session.username is', req.session.username);
     let session_user = await db.collection(USERS).find({username: req.session.username}).toArray();
     session_user = session_user[0];
+    let num_following = session_user.following.length
     console.log("session_user:", session_user);
     console.log("session_user is ", session_user.username);
     let num_followers = await db.collection(USERS).find({username : user}).toArray();
@@ -417,7 +418,7 @@ app.post('/addFollower/:user', async (req,res) => {
         console.log("update: ", update);
         const update2 = await db.collection(USERS).updateOne({username : req.session.username}, {$push: {following: user}});
         console.log("update2: ", update2);
-        return res.json({error: false, followers: num_followers + 1, following: session_user.following.length + 1});
+        return res.json({error: false, followers: num_followers + 1});
     }
     console.log("already following is 0");
     return res.json({error : "you are already following this person!", followers : (num_followers === 0) ? 0 : num_followers});
