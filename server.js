@@ -355,7 +355,7 @@ app.post('/delete/:postId', async (req, res) => {
     let postId = req.params.postId;
     let post = await db.collection(POSTS).deleteOne({"postId": postId});
     req.flash('info', 'Post has been deleted successfully');
-    return res.redirect('/')
+    return res.redirect('/userpage/' + req.session.username)
 })
 
 

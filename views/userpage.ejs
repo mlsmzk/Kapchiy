@@ -114,11 +114,11 @@
                         <p>No tags attached to this post</p>
                         <% }; %>
                             <% if (user === username) { %>
-                                <form method="GET" action="/update/<%= post.postId %>"></form>
+                                <form method="GET" action="/update/<%= post.postId %>">
                                     <p><button type="submit">Update Post</button></p>
                                 </form>
-                                <form method="GET" action="/update/<%= post.postId %>"></form>
-                                    <p><button type="submit">Update Post</button></p>
+                                <form method="POST" action="/delete/<%= post.postId %>">
+                                    <p><button type="submit">Delete Post</button></p>
                                 </form>
                             <% }; %> 
                         <% }); %>
